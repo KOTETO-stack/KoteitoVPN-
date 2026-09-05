@@ -21,7 +21,6 @@ FAIL_THRESHOLD = 3
 
 # ========== МНОГО ИСТОЧНИКОВ ==========
 SOURCES = [
-    # Основные агрегаторы
     "https://raw.githubusercontent.com/iwantonline/FreeV2Ray/main/README.md",
     "https://raw.githubusercontent.com/yebekhe/TelegramV2rayCollector/main/README.md",
     "https://raw.githubusercontent.com/mahdibland/V2RayAggregator/master/README.md",
@@ -38,15 +37,12 @@ SOURCES = [
     "https://raw.githubusercontent.com/ermaozi/get_subscribe/main/subscribe/v2ray.txt",
     "https://raw.githubusercontent.com/anaer/Sub/main/README.md",
     "https://raw.githubusercontent.com/colatiger/v2ray-nodes/main/README.md",
-    # Прямые ссылки на конфиги
     "https://raw.githubusercontent.com/ryanreese99/v2ray-configs/main/v2ray.txt",
     "https://raw.githubusercontent.com/zhuxindong/FreeV2Ray/main/v2ray",
     "https://raw.githubusercontent.com/AirportR/FreeV2ray/refs/heads/main/README.md",
     "https://raw.githubusercontent.com/v2fly/v2ray-examples/main/README.md",
     "https://raw.githubusercontent.com/XTLS/Xray-examples/main/README.md",
 ]
-
-# ========== ФУНКЦИИ ==========
 
 def load_source_state():
     if os.path.exists(STATE_FILE):
@@ -59,6 +55,8 @@ def save_source_state(state):
         json.dump(state, f)
 
 def get_country_flag(country_name):
+    if country_name == "Unknown":
+        return "🏳️"
     try:
         country = pycountry.countries.get(name=country_name)
         if not country:
@@ -70,6 +68,8 @@ def get_country_flag(country_name):
     return "🏳️"
 
 def get_country_ru(country_name):
+    if country_name == "Unknown":
+        return "Unknown"
     ru_names = {
         "United States": "США",
         "United Kingdom": "Великобритания",
@@ -106,7 +106,8 @@ def get_country_ru(country_name):
     return ru_names.get(country_name, country_name)
 
 def extract_country_city(raw_name):
-    """Извлекает страну и город из имени (US_Нью-Йорк, DE-Франкфурт, #US_Нью-Йорк)"""
+    """Пытается извлечь страну и город, возвращает (страна, город) или (None, None)"""
+    # Удаляем все эмодзи (включая флаги)
     clean = re.sub(r'[^\w\s\-_]', '', raw_name).strip()
     # Ищем двухбуквенный код в начале
     match = re.search(r'^([A-Z]{2})[_\-\s]+(.+)', clean)
@@ -119,7 +120,7 @@ def extract_country_city(raw_name):
                 return country.name, city
         except:
             pass
-    # Если есть дефис
+    # Если есть дефис, пробуем разделить
     if '-' in clean:
         parts = clean.split('-')
         if len(parts) >= 2:
@@ -139,7 +140,16 @@ def extract_country_city(raw_name):
                         return country.name, second
                 except:
                     pass
-    # Если ничего не нашлось, пробуем по TLD домена (вырезаем из конфига)
+    # Если не удалось, пробуем взять первое слово как код страны
+    words = clean.split()
+    if words and len(words[0]) == 2 and words[0].isalpha():
+        try:
+            country = pycountry.countries.get(alpha_2=words[0].upper())
+            if country:
+                city = " ".join(words[1:]) if len(words) > 1 else "Unknown"
+                return country.name, city
+        except:
+            pass
     return None, None
 
 def parse_config_line(line):
@@ -149,41 +159,35 @@ def parse_config_line(line):
     
     # Ищем имя #...
     match = re.search(r'#(.+?)(?:\n|$)', line)
-    if match:
-        raw_name = match.group(1).strip()
+    raw_name = match.group(1).strip() if match else ""
+    
+    country = None
+    city = None
+    if raw_name:
         country, city = extract_country_city(raw_name)
-    else:
-        # Если нет #, пробуем взять страну из домена (по TLD)
+    
+    # Если не удалось определить страну, пробуем по TLD домена (из конфига)
+    if not country:
         match2 = re.search(r'://([^@]+@)?([^:/]+)', line)
         if match2:
             host = match2.group(2)
             tld = host.split('.')[-1].upper()
             try:
-                country = pycountry.countries.get(alpha_2=tld)
-                if country:
-                    country = country.name
+                country_obj = pycountry.countries.get(alpha_2=tld)
+                if country_obj:
+                    country = country_obj.name
                     city = "Unknown"
-                else:
-                    country = None
-                    city = None
             except:
-                country = None
-                city = None
-        else:
-            country = None
-            city = None
+                pass
     
+    # Если всё равно не определили, ставим Unknown
     if not country:
-        return None  # страна не определена
+        country = "Unknown"
+        city = "Unknown"
     
     # Исключаем нежелательные страны
     if country in EXCLUDED_COUNTRIES:
         return None
-    
-    # Исключаем нежелательные слова в имени (CloudFlare, V2CROSS и т.п.)
-    if match:
-        if re.search(r'(cloudflare|v2cross|fastly|cdn|proxy)', raw_name, re.I):
-            return None
     
     country_ru = get_country_ru(country)
     flag = get_country_flag(country)
@@ -242,6 +246,13 @@ def build_subscription():
     save_source_state(state)
     print(f"📥 Всего получено сырых строк: {len(all_configs)}")
 
+    # Считаем протоколы для отладки
+    proto_counts = {}
+    for line in all_configs:
+        proto = line.split("://")[0]
+        proto_counts[proto] = proto_counts.get(proto, 0) + 1
+    print(f"📊 Протоколы: {proto_counts}")
+
     # Парсим и удаляем дубликаты
     seen = set()
     parsed = []
@@ -253,6 +264,13 @@ def build_subscription():
         if p:
             parsed.append(p)
     print(f"🔍 После парсинга и фильтрации: {len(parsed)} серверов")
+
+    if not parsed:
+        print("⚠️ Нет ни одного сервера после парсинга. Проверьте имена в источниках.")
+        # Для отладки выведем первые 3 строки (но в логах Actions это будет видно)
+        for i, line in enumerate(all_configs[:3]):
+            print(f"Пример строки {i+1}: {line[:100]}...")
+        return
 
     # Проверка пинга
     with concurrent.futures.ThreadPoolExecutor(max_workers=30) as executor:
@@ -267,9 +285,6 @@ def build_subscription():
     print(f"📶 После пинга: {len(available)} серверов")
     available.sort(key=lambda x: x['ping'])
     selected = available[:MAX_SERVERS]
-
-    # DNS-тест ОТКЛЮЧЁН (пока)
-    # Просто пропускаем этот шаг
 
     # Формируем названия
     for s in selected:
