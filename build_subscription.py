@@ -14,22 +14,36 @@ import emoji
 # ========== КОНФИГ ==========
 MAX_PING = 500
 MAX_SERVERS = 150
-ALLOWED_PROTOCOLS = ["hy2", "trojan"]          # Только Hy2 и Trojan
-EXCLUDED_COUNTRIES = ["Ukraine", "Russia"]     # Исключаем
+ALLOWED_PROTOCOLS = ["vless", "trojan", "hy2"]   # Добавил VLESS
+EXCLUDED_COUNTRIES = ["Ukraine", "Russia"]
 STATE_FILE = "source_state.json"
 FAIL_THRESHOLD = 3
 
-# ========== ИСТОЧНИКИ (только проверенные, с Hy2/Trojan) ==========
+# ========== МНОГО ИСТОЧНИКОВ ==========
 SOURCES = [
-    "https://raw.githubusercontent.com/Pawdroid/Free-servers/main/README.md",
+    # Основные агрегаторы
+    "https://raw.githubusercontent.com/iwantonline/FreeV2Ray/main/README.md",
+    "https://raw.githubusercontent.com/yebekhe/TelegramV2rayCollector/main/README.md",
+    "https://raw.githubusercontent.com/mahdibland/V2RayAggregator/master/README.md",
+    "https://raw.githubusercontent.com/niizam/OX-Ray/main/README.md",
+    "https://raw.githubusercontent.com/PojavLauncherTeam/vpn/refs/heads/main/vless.txt",
+    "https://raw.githubusercontent.com/MAXIMUM-KA/VPN-Configs/main/vless.txt",
+    "https://raw.githubusercontent.com/Epodon/FreeV2Ray/main/README.md",
     "https://raw.githubusercontent.com/alanbobs999/TopFreeProxies/master/README.md",
-    "https://raw.githubusercontent.com/AirportR/FreeV2ray/refs/heads/main/README.md",
-    "https://raw.githubusercontent.com/ryanreese99/v2ray-configs/main/v2ray.txt",
-    "https://raw.githubusercontent.com/zhuxindong/FreeV2Ray/main/v2ray",
-    "https://raw.githubusercontent.com/anaer/Sub/main/README.md",
+    "https://raw.githubusercontent.com/Pawdroid/Free-servers/main/README.md",
+    "https://raw.githubusercontent.com/xiyaowong/freeV2ray/main/README.md",
+    "https://raw.githubusercontent.com/AlexNet123/v2ray/main/README.md",
+    "https://raw.githubusercontent.com/v2ray-links/v2ray-links/main/README.md",
     "https://raw.githubusercontent.com/freefq/free/main/README.md",
     "https://raw.githubusercontent.com/ermaozi/get_subscribe/main/subscribe/v2ray.txt",
-    # Добавь сюда свои любимые источники
+    "https://raw.githubusercontent.com/anaer/Sub/main/README.md",
+    "https://raw.githubusercontent.com/colatiger/v2ray-nodes/main/README.md",
+    # Прямые ссылки на конфиги
+    "https://raw.githubusercontent.com/ryanreese99/v2ray-configs/main/v2ray.txt",
+    "https://raw.githubusercontent.com/zhuxindong/FreeV2Ray/main/v2ray",
+    "https://raw.githubusercontent.com/AirportR/FreeV2ray/refs/heads/main/README.md",
+    "https://raw.githubusercontent.com/v2fly/v2ray-examples/main/README.md",
+    "https://raw.githubusercontent.com/XTLS/Xray-examples/main/README.md",
 ]
 
 # ========== ФУНКЦИИ ==========
@@ -56,8 +70,6 @@ def get_country_flag(country_name):
     return "🏳️"
 
 def get_country_ru(country_name):
-    """Переводит название страны на русский (используем встроенный словарь)"""
-    # Простой словарь для часто встречающихся стран
     ru_names = {
         "United States": "США",
         "United Kingdom": "Великобритания",
@@ -93,48 +105,41 @@ def get_country_ru(country_name):
     }
     return ru_names.get(country_name, country_name)
 
-def extract_country_city_from_name(raw_name):
-    """Извлекает страну и город из имени (например, 'US_Нью-Йорк' или 'DE_Франкфурт')"""
-    # Убираем эмодзи и лишние символы
+def extract_country_city(raw_name):
+    """Извлекает страну и город из имени (US_Нью-Йорк, DE-Франкфурт, #US_Нью-Йорк)"""
     clean = re.sub(r'[^\w\s\-_]', '', raw_name).strip()
-    
-    # Ищем паттерн: код страны (2 буквы) + город
-    match = re.search(r'([A-Z]{2})[_\-\s]+(.+)', clean)
+    # Ищем двухбуквенный код в начале
+    match = re.search(r'^([A-Z]{2})[_\-\s]+(.+)', clean)
     if match:
         code = match.group(1)
         city = match.group(2).strip()
-        # Получаем страну по коду
         try:
             country = pycountry.countries.get(alpha_2=code)
             if country:
                 return country.name, city
         except:
             pass
-    
-    # Если есть дефис, пробуем разделить
+    # Если есть дефис
     if '-' in clean:
         parts = clean.split('-')
         if len(parts) >= 2:
-            country_part = parts[0].strip()
-            city_part = parts[1].strip()
-            # Проверяем, не является ли первая часть кодом страны
-            if len(country_part) == 2 and country_part.isalpha():
+            first = parts[0].strip()
+            second = parts[1].strip()
+            if len(first) == 2 and first.isalpha():
                 try:
-                    country = pycountry.countries.get(alpha_2=country_part.upper())
+                    country = pycountry.countries.get(alpha_2=first.upper())
                     if country:
-                        return country.name, city_part
+                        return country.name, second
                 except:
                     pass
             else:
-                # Если не код, пробуем найти страну по полному названию
                 try:
-                    country = pycountry.countries.get(name=country_part)
+                    country = pycountry.countries.get(name=first)
                     if country:
-                        return country.name, city_part
+                        return country.name, second
                 except:
                     pass
-    
-    # Если не удалось, пробуем по TLD домена (если есть)
+    # Если ничего не нашлось, пробуем по TLD домена (вырезаем из конфига)
     return None, None
 
 def parse_config_line(line):
@@ -142,13 +147,13 @@ def parse_config_line(line):
         return None
     proto = line.split("://")[0]
     
-    # Пытаемся извлечь имя (#...)
+    # Ищем имя #...
     match = re.search(r'#(.+?)(?:\n|$)', line)
     if match:
         raw_name = match.group(1).strip()
-        country, city = extract_country_city_from_name(raw_name)
+        country, city = extract_country_city(raw_name)
     else:
-        # Если нет #, пробуем извлечь страну из домена (по TLD)
+        # Если нет #, пробуем взять страну из домена (по TLD)
         match2 = re.search(r'://([^@]+@)?([^:/]+)', line)
         if match2:
             host = match2.group(2)
@@ -169,13 +174,17 @@ def parse_config_line(line):
             city = None
     
     if not country:
-        return None  # Не удалось определить страну
+        return None  # страна не определена
     
-    # Проверяем исключения
+    # Исключаем нежелательные страны
     if country in EXCLUDED_COUNTRIES:
         return None
     
-    # Преобразуем в русское название
+    # Исключаем нежелательные слова в имени (CloudFlare, V2CROSS и т.п.)
+    if match:
+        if re.search(r'(cloudflare|v2cross|fastly|cdn|proxy)', raw_name, re.I):
+            return None
+    
     country_ru = get_country_ru(country)
     flag = get_country_flag(country)
     return {
@@ -184,8 +193,7 @@ def parse_config_line(line):
         "country": country_ru,
         "city": city or "Unknown",
         "flag": flag,
-        "ping": None,
-        "raw_country": country  # сохраняем для возможной фильтрации
+        "ping": None
     }
 
 def fetch_lines_from_url(url):
@@ -215,25 +223,6 @@ def ping_server(config_line):
     except:
         return None
 
-def check_dns_leak(config_line):
-    """Проверка DNS-утечки через запрос к 1.1.1.1 через прокси (только если прокси поддерживает SOCKS5)"""
-    # Для Trojan и Hy2 используем SOCKS5 (обычно так и есть)
-    try:
-        match = re.search(r'://([^:/]+)(?::(\d+))?', config_line)
-        if not match:
-            return False
-        host = match.group(1)
-        port = match.group(2) or '443'
-        # Пробуем через socks5
-        cmd = ["curl", "-s", "--socks5-hostname", f"{host}:{port}", "https://1.1.1.1/dns-query?name=google.com", "-o", "/dev/null", "-w", "%{http_code}"]
-        result = subprocess.run(cmd, timeout=5, capture_output=True, text=True)
-        if result.stdout.strip() in ["200", "403"]:
-            return True
-        # Если не получилось, пробуем без прокси (но это не должно быть утечкой)
-        return False
-    except:
-        return False
-
 def build_subscription():
     print("🚀 Запуск сборки подписки...")
     state = load_source_state()
@@ -253,18 +242,17 @@ def build_subscription():
     save_source_state(state)
     print(f"📥 Всего получено сырых строк: {len(all_configs)}")
 
-    # Парсим и фильтруем
-    parsed = []
+    # Парсим и удаляем дубликаты
     seen = set()
+    parsed = []
     for line in all_configs:
-        # Убираем дубликаты
         if line in seen:
             continue
         seen.add(line)
         p = parse_config_line(line)
         if p:
             parsed.append(p)
-    print(f"🔍 Отфильтровано по протоколам, странам и дубликатам: {len(parsed)} серверов")
+    print(f"🔍 После парсинга и фильтрации: {len(parsed)} серверов")
 
     # Проверка пинга
     with concurrent.futures.ThreadPoolExecutor(max_workers=30) as executor:
@@ -276,33 +264,22 @@ def build_subscription():
                 server['ping'] = round(ping, 1)
 
     available = [s for s in parsed if s['ping'] is not None]
-    print(f"📶 После проверки пинга: {len(available)} серверов")
-
-    # Сортируем и отбираем лучшие
+    print(f"📶 После пинга: {len(available)} серверов")
     available.sort(key=lambda x: x['ping'])
     selected = available[:MAX_SERVERS]
 
-    # Проверка DNS-утечек (отбрасываем только те, где явная утечка)
-    print("🔍 Проверка DNS-утечек (может занять время)...")
-    dns_ok = []
-    for s in selected:
-        if check_dns_leak(s['config']):
-            dns_ok.append(s)
-        else:
-            print(f"⚠️ {s['country']} {s['city']} не прошёл DNS-тест (отбрасываем)")
-    selected = dns_ok
-    print(f"✅ После DNS-теста осталось: {len(selected)} серверов")
+    # DNS-тест ОТКЛЮЧЁН (пока)
+    # Просто пропускаем этот шаг
 
-    # Формируем названия (без лишних слов)
+    # Формируем названия
     for s in selected:
-        # Если город неизвестен, не показываем его
         city_part = s['city'] if s['city'] != "Unknown" else ""
         if city_part:
             s['name'] = f"{s['country']} {city_part} {s['flag']}"
         else:
             s['name'] = f"{s['country']} {s['flag']}"
 
-    # Генерируем подписку
+    # Запись подписки
     output_lines = []
     for s in selected:
         output_lines.append(f"# {s['name']} | Ping: {s['ping']}ms | {s['protocol']}")
