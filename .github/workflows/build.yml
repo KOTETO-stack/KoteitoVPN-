@@ -2,8 +2,11 @@ name: Build VPN Subscription
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Каждый час
+    - cron: '0 * * * *'   # каждый час
   workflow_dispatch:
+
+permissions:
+  contents: write   # <----- ЭТО ГЛАВНОЕ
 
 jobs:
   build:
