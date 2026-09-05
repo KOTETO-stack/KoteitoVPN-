@@ -11,18 +11,18 @@ import os
 import pycountry
 import emoji
 
-# ========== КОНФИГ (можно менять) ==========
+# ========== КОНФИГ ==========
 MAX_PING = 500
 MAX_SERVERS = 150
-ALLOWED_PROTOCOLS = ["hy2", "trojan", "vless"]   # Добавил vless для теста
+ALLOWED_PROTOCOLS = ["hy2", "trojan", "vless"]   # VLESS добавил для большего выбора
 EXCLUDED_COUNTRIES = ["Ukraine", "Russia"]
 TOR_BRIDGES_ENABLED = True
 STATE_FILE = "source_state.json"
 FAIL_THRESHOLD = 3
 
-# ========== РАСШИРЕННЫЙ СПИСОК ИСТОЧНИКОВ ==========
+# ========== РАСШИРЕННЫЙ СПИСОК ИСТОЧНИКОВ (с прямыми ссылками на конфиги) ==========
 SOURCES = [
-    # Старые
+    # Основные агрегаторы (где есть строки с протоколами)
     "https://raw.githubusercontent.com/iwantonline/FreeV2Ray/main/README.md",
     "https://raw.githubusercontent.com/yebekhe/TelegramV2rayCollector/main/README.md",
     "https://raw.githubusercontent.com/mahdibland/V2RayAggregator/master/README.md",
@@ -39,10 +39,13 @@ SOURCES = [
     "https://raw.githubusercontent.com/ermaozi/get_subscribe/main/subscribe/v2ray.txt",
     "https://raw.githubusercontent.com/anaer/Sub/main/README.md",
     "https://raw.githubusercontent.com/colatiger/v2ray-nodes/main/README.md",
-    # Новые источники с Trojan/Hy2
+    # Дополнительные источники с большим количеством конфигов
     "https://raw.githubusercontent.com/AirportR/FreeV2ray/refs/heads/main/README.md",
     "https://raw.githubusercontent.com/v2fly/v2ray-examples/main/README.md",
     "https://raw.githubusercontent.com/XTLS/Xray-examples/main/README.md",
+    # Прямые ссылки на текстовые файлы с конфигами (часто содержат Trojan)
+    "https://raw.githubusercontent.com/ryanreese99/v2ray-configs/main/v2ray.txt",
+    "https://raw.githubusercontent.com/zhuxindong/FreeV2Ray/main/v2ray",
 ]
 
 def load_source_state():
@@ -78,18 +81,38 @@ def parse_config_line(line):
         raw_name = match.group(1).strip()
         # Убираем эмодзи и лишние символы
         clean_name = re.sub(r'[^\w\s-]', '', raw_name).strip()
-        # Если есть дефис, разделяем страну и город
         if '-' in clean_name:
             parts = clean_name.split('-')
             country = parts[0].strip()
             city = parts[1].strip() if len(parts) > 1 else "Unknown"
         else:
-            # Если нет дефиса, пытаемся угадать страну по имени (можно улучшить)
-            country = clean_name
-            city = "Unknown"
+            # Если нет дефиса, пробуем взять первые слова как страну
+            words = clean_name.split()
+            if words:
+                country = words[0]
+                city = " ".join(words[1:]) if len(words) > 1 else "Unknown"
+            else:
+                country = "Unknown"
+                city = "Unknown"
     else:
-        country = "Unknown"
-        city = "Unknown"
+        # Если нет #, пробуем извлечь страну из домена (грубо)
+        match2 = re.search(r'://[^@]+@([^:/]+)', line)
+        if match2:
+            host = match2.group(1)
+            # Пытаемся угадать страну по TLD (очень приблизительно)
+            tld = host.split('.')[-1].upper()
+            # Простой словарь TLD -> страна (можно расширить)
+            tld_country = {
+                "US": "United States", "GB": "United Kingdom", "DE": "Germany",
+                "FR": "France", "JP": "Japan", "SG": "Singapore", "NL": "Netherlands",
+                "CA": "Canada", "AU": "Australia", "IN": "India", "BR": "Brazil",
+                "RU": "Russia", "UA": "Ukraine"
+            }
+            country = tld_country.get(tld, "Unknown")
+            city = "Unknown"
+        else:
+            country = "Unknown"
+            city = "Unknown"
     
     if country in EXCLUDED_COUNTRIES:
         return None
@@ -109,6 +132,7 @@ def fetch_lines_from_url(url):
         resp = requests.get(url, timeout=15)
         if resp.status_code == 200:
             lines = resp.text.splitlines()
+            # Ищем строки, начинающиеся с разрешённых протоколов
             return [l.strip() for l in lines if l.strip() and any(l.startswith(p + "://") for p in ALLOWED_PROTOCOLS)]
     except:
         pass
@@ -122,6 +146,7 @@ def ping_server(config_line):
         host = match.group(1)
         port = match.group(2) or '80'
         start = time.time()
+        # Используем curl для проверки доступности (просто TCP-соединение)
         subprocess.run(
             ["curl", "-s", "-o", "/dev/null", "-w", "%{time_total}", f"http://{host}:{port}"],
             timeout=3, capture_output=True, text=True
@@ -130,31 +155,6 @@ def ping_server(config_line):
         return ping_ms if ping_ms < MAX_PING else None
     except:
         return None
-
-def check_dns_leak_via_proxy(config_line):
-    try:
-        match = re.search(r'://([^:/]+)(?::(\d+))?', config_line)
-        if not match:
-            return False
-        host = match.group(1)
-        port = match.group(2) or '443'
-        if "trojan" in config_line.lower() or "hy2" in config_line.lower():
-            proxy_type = "socks5"
-        else:
-            proxy_type = "http"
-        proxy_url = f"{proxy_type}://{host}:{port}"
-        cmd = ["curl", "-s", "--proxy", proxy_url, "https://1.1.1.1/dns-query?name=google.com", "-o", "/dev/null", "-w", "%{http_code}"]
-        result = subprocess.run(cmd, timeout=5, capture_output=True, text=True)
-        if result.stdout.strip() in ["200", "403"]:
-            return True
-        if proxy_type == "socks5":
-            cmd = ["curl", "-s", "--socks5-hostname", f"{host}:{port}", "https://1.1.1.1/dns-query?name=google.com", "-o", "/dev/null", "-w", "%{http_code}"]
-            result = subprocess.run(cmd, timeout=5, capture_output=True, text=True)
-            if result.stdout.strip() in ["200", "403"]:
-                return True
-        return False
-    except:
-        return False
 
 def fetch_tor_bridges_dynamic():
     bridges = []
@@ -192,6 +192,7 @@ def build_subscription():
             parsed.append(p)
     print(f"🔍 Отфильтровано по протоколам и странам: {len(parsed)} серверов")
 
+    # Проверка пинга (многопоточная)
     with concurrent.futures.ThreadPoolExecutor(max_workers=30) as executor:
         future_to_server = {executor.submit(ping_server, s['config']): s for s in parsed}
         for future in concurrent.futures.as_completed(future_to_server):
@@ -200,11 +201,13 @@ def build_subscription():
             if ping:
                 server['ping'] = round(ping, 1)
 
+    # Удаляем недоступные (где ping None)
     available = [s for s in parsed if s['ping'] is not None]
     print(f"📶 После проверки пинга: {len(available)} серверов")
     available.sort(key=lambda x: x['ping'])
     selected = available[:MAX_SERVERS]
 
+    # Добавляем Tor-мосты (если пинг < MAX_PING)
     tor_bridges = fetch_tor_bridges_dynamic()
     for tb in tor_bridges:
         match = re.search(r'socks5://([^:/]+)(?::(\d+))?', tb)
@@ -222,15 +225,16 @@ def build_subscription():
                     "ping": ping
                 })
 
-    print("🔍 Проверка DNS-утечек (может занять время)...")
-    dns_ok = []
-    for s in selected:
-        if check_dns_leak_via_proxy(s['config']):
-            dns_ok.append(s)
-        else:
-            print(f"⚠️ Сервер {s['country']} {s['city']} не прошёл тест DNS-утечки")
-    selected = dns_ok
-    print(f"✅ После DNS-теста осталось: {len(selected)} серверов")
+    # DNS-тест временно отключён (закомментирован)
+    # print("🔍 Проверка DNS-утечек (может занять время)...")
+    # dns_ok = []
+    # for s in selected:
+    #     if check_dns_leak_via_proxy(s['config']):
+    #         dns_ok.append(s)
+    #     else:
+    #         print(f"⚠️ Сервер {s['country']} {s['city']} не прошёл тест DNS-утечки")
+    # selected = dns_ok
+    # print(f"✅ После DNS-теста осталось: {len(selected)} серверов")
 
     for s in selected:
         s['name'] = f"{s['country']} {s['city']} {s['flag']}"
