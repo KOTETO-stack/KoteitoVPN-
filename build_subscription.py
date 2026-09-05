@@ -8,20 +8,21 @@ import subprocess
 import concurrent.futures
 import time
 import os
-from datetime import datetime
 import pycountry
 import emoji
 
-# ================== КОНФИГ ==================
+# ========== КОНФИГ (можно менять) ==========
 MAX_PING = 500
 MAX_SERVERS = 150
-ALLOWED_PROTOCOLS = ["hy2", "trojan"]
+ALLOWED_PROTOCOLS = ["hy2", "trojan", "vless"]   # Добавил vless для теста
 EXCLUDED_COUNTRIES = ["Ukraine", "Russia"]
 TOR_BRIDGES_ENABLED = True
 STATE_FILE = "source_state.json"
 FAIL_THRESHOLD = 3
 
+# ========== РАСШИРЕННЫЙ СПИСОК ИСТОЧНИКОВ ==========
 SOURCES = [
+    # Старые
     "https://raw.githubusercontent.com/iwantonline/FreeV2Ray/main/README.md",
     "https://raw.githubusercontent.com/yebekhe/TelegramV2rayCollector/main/README.md",
     "https://raw.githubusercontent.com/mahdibland/V2RayAggregator/master/README.md",
@@ -38,6 +39,10 @@ SOURCES = [
     "https://raw.githubusercontent.com/ermaozi/get_subscribe/main/subscribe/v2ray.txt",
     "https://raw.githubusercontent.com/anaer/Sub/main/README.md",
     "https://raw.githubusercontent.com/colatiger/v2ray-nodes/main/README.md",
+    # Новые источники с Trojan/Hy2
+    "https://raw.githubusercontent.com/AirportR/FreeV2ray/refs/heads/main/README.md",
+    "https://raw.githubusercontent.com/v2fly/v2ray-examples/main/README.md",
+    "https://raw.githubusercontent.com/XTLS/Xray-examples/main/README.md",
 ]
 
 def load_source_state():
@@ -62,25 +67,33 @@ def get_country_flag(country_name):
     return "🏳️"
 
 def parse_config_line(line):
+    # Проверяем протокол
     if not any(line.startswith(p + "://") for p in ALLOWED_PROTOCOLS):
         return None
     proto = line.split("://")[0]
+    
+    # Пытаемся извлечь имя (#...)
     match = re.search(r'#(.+?)(?:\n|$)', line)
     if match:
         raw_name = match.group(1).strip()
+        # Убираем эмодзи и лишние символы
         clean_name = re.sub(r'[^\w\s-]', '', raw_name).strip()
-        parts = clean_name.split('-')
-        if len(parts) >= 2:
+        # Если есть дефис, разделяем страну и город
+        if '-' in clean_name:
+            parts = clean_name.split('-')
             country = parts[0].strip()
             city = parts[1].strip() if len(parts) > 1 else "Unknown"
         else:
-            country = "Unknown"
+            # Если нет дефиса, пытаемся угадать страну по имени (можно улучшить)
+            country = clean_name
             city = "Unknown"
     else:
         country = "Unknown"
         city = "Unknown"
+    
     if country in EXCLUDED_COUNTRIES:
         return None
+    
     flag = get_country_flag(country)
     return {
         "protocol": proto,
@@ -119,16 +132,13 @@ def ping_server(config_line):
         return None
 
 def check_dns_leak_via_proxy(config_line):
-    """Реальная проверка DNS-утечки через прокси (SOCKS5/HTTP)"""
     try:
         match = re.search(r'://([^:/]+)(?::(\d+))?', config_line)
         if not match:
             return False
         host = match.group(1)
         port = match.group(2) or '443'
-        if "trojan" in config_line.lower():
-            proxy_type = "socks5"
-        elif "hy2" in config_line.lower():
+        if "trojan" in config_line.lower() or "hy2" in config_line.lower():
             proxy_type = "socks5"
         else:
             proxy_type = "http"
