@@ -1,0 +1,4 @@
+
+# AdGuard DNS (блокировка рекламы)
+dns://94.140.14.14?name=adguard
+# Тест утечки DNS: https://www.dnsleaktest.com/
