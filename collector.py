@@ -3,7 +3,7 @@ import aiohttp
 import re
 import base64
 import random
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import parse_qs, urlencode
 import emoji
 
 # ---------- НАСТРОЙКИ ----------
@@ -43,6 +43,55 @@ async def fetch_configs(session, url):
         return []
     return []
 
+# Безопасный парсинг URL с поддержкой IPv6
+def parse_proxy_url(url):
+    """
+    Возвращает (protocol, host, port, query_dict)
+    protocol: 'hy2' или 'trojan'
+    host: строка, может быть IPv6 без скобок
+    port: строка или None
+    query_dict: dict параметров
+    """
+    # Разделяем протокол
+    match = re.match(r'^(hy2|trojan)://([^?#]+)(\?.*)?$', url)
+    if not match:
+        return None, None, None, {}
+    
+    protocol = match.group(1)
+    host_part = match.group(2)
+    query_part = match.group(3) or ""
+    
+    # Извлекаем хост и порт
+    # Если хост в квадратных скобках (IPv6)
+    if host_part.startswith('['):
+        # Формат: [IPv6]:port или [IPv6]
+        bracket_end = host_part.find(']')
+        if bracket_end == -1:
+            return None, None, None, {}
+        host = host_part[1:bracket_end]
+        rest = host_part[bracket_end+1:]
+        if rest.startswith(':'):
+            port = rest[1:]
+        else:
+            port = None
+    else:
+        # Обычный хост: порт отделяется двоеточием
+        if ':' in host_part:
+            host, port = host_part.split(':', 1)
+        else:
+            host = host_part
+            port = None
+    
+    # Парсим параметры
+    query_dict = {}
+    if query_part:
+        query_dict = parse_qs(query_part[1:])
+        # Преобразуем значения из списков в строки (для удобства)
+        query_dict = {k: v[0] if v else "" for k, v in query_dict.items()}
+    
+    return protocol, host, port, query_dict
+
+# Определяем страну по хосту
 def parse_location(host):
     country_map = {
         "ru": "Россия", "us": "США", "de": "Германия", "fr": "Франция",
@@ -64,10 +113,8 @@ def generate_name(host, country_name, country_code):
     flag = emoji.emojize(f":{country_code.lower()}:", language='alias') if country_code else "🏳️"
     return f"{country_name} {city} {flag}".strip()
 
-def apply_protection(url):
-    parsed = urlparse(url)
-    query = parse_qs(parsed.query)
-    
+def apply_protection(protocol, host, port, query):
+    # Защитные параметры
     sni = random.choice(SNI_LIST)
     dns = random.choice(DNS_LIST)
     
@@ -78,16 +125,30 @@ def apply_protection(url):
         "encryption": "none",
         "dns": dns,
     }
-    if url.startswith("trojan://"):
+    if protocol == "trojan":
         protection["flow"] = "xtls-rprx-vision"
     
+    # Обновляем параметры, не затирая существующие
     for key, value in protection.items():
-        if key not in query:
-            query[key] = [value]
+        if key not in query or not query[key]:
+            query[key] = value
     
-    new_query = "&".join([f"{k}={v[0]}" for k, v in query.items()])
-    base = url.split("?")[0]
-    return f"{base}?{new_query}"
+    # Пересобираем URL
+    # Хост с портом
+    if port:
+        if ':' in host:
+            # IPv6
+            host_port = f"[{host}]:{port}"
+        else:
+            host_port = f"{host}:{port}"
+    else:
+        if ':' in host:
+            host_port = f"[{host}]"
+        else:
+            host_port = host
+    
+    query_str = urlencode(query)
+    return f"{protocol}://{host_port}?{query_str}"
 
 async def tcp_ping(host, port=443, timeout=1.5):
     try:
@@ -105,26 +166,27 @@ async def process_configs(configs):
     valid = []
     tasks = []
     for cfg in configs:
-        proto = cfg.split("://")[0]
+        proto, host, port, query = parse_proxy_url(cfg)
+        if not proto or not host:
+            continue
         if proto not in ALLOWED_PROTOCOLS:
             continue
         if any(kw in cfg.lower() for kw in EXCLUDED_KEYWORDS):
             continue
-        parsed = urlparse(cfg)
-        host = parsed.hostname or ""
         country_name, country_code = parse_location(host)
         if country_code in EXCLUDED_COUNTRIES:
             continue
-        tasks.append((cfg, host, country_name, country_code))
+        tasks.append((cfg, proto, host, port, query, country_name, country_code))
     
+    # Проверяем пинг параллельно (по хосту)
     ping_results = await asyncio.gather(
-        *[tcp_ping(host) for _, host, _, _ in tasks],
+        *[tcp_ping(host) for _, _, host, _, _, _, _ in tasks],
         return_exceptions=True
     )
     
-    for (cfg, host, country_name, country_code), alive in zip(tasks, ping_results):
+    for (cfg, proto, host, port, query, country_name, country_code), alive in zip(tasks, ping_results):
         if alive is True:
-            protected_cfg = apply_protection(cfg)
+            protected_cfg = apply_protection(proto, host, port, query)
             name = generate_name(host, country_name, country_code)
             valid.append({"name": name, "url": protected_cfg})
             if len(valid) >= MAX_SERVERS:
