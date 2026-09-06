@@ -1,7 +1,9 @@
-# KoteitoVPN-
-# KoteitoVPN — автоматическая подписка для Karing
+# VPN-подписка для Karing
 
-Обновление **каждый час** через GitHub Actions.
+Этот репозиторий автоматически генерирует файл подписки `subscription.txt` с серверами Trojan и Hysteria2.
 
-## Ссылка для Karing (подставь свой логин и имя репозитория)
-https://raw.githubusercontent.com/ТВОЙ_ЛОГИН/KoteitoVPN/main/subscription.txt
+## Как использовать в Karing (iOS)
+
+1. Откройте приложение **Karing**.
+2. Нажмите на значок «+» или «Добавить подписку».
+3. Введите URL:
