@@ -10,7 +10,6 @@ import emoji
 SOURCES_FILE = "sources.txt"
 OUTPUT_FILE = "ready.txt"
 MAX_SERVERS = 150
-MAX_PING_MS = 500
 EXCLUDED_COUNTRIES = {"UA"}
 EXCLUDED_KEYWORDS = ["bns", "bnx"]
 ALLOWED_PROTOCOLS = {"hy2", "trojan"}
@@ -45,26 +44,14 @@ async def fetch_configs(session, url):
 
 # Безопасный парсинг URL с поддержкой IPv6
 def parse_proxy_url(url):
-    """
-    Возвращает (protocol, host, port, query_dict)
-    protocol: 'hy2' или 'trojan'
-    host: строка, может быть IPv6 без скобок
-    port: строка или None
-    query_dict: dict параметров
-    """
-    # Разделяем протокол
     match = re.match(r'^(hy2|trojan)://([^?#]+)(\?.*)?$', url)
     if not match:
         return None, None, None, {}
-    
     protocol = match.group(1)
     host_part = match.group(2)
     query_part = match.group(3) or ""
     
-    # Извлекаем хост и порт
-    # Если хост в квадратных скобках (IPv6)
     if host_part.startswith('['):
-        # Формат: [IPv6]:port или [IPv6]
         bracket_end = host_part.find(']')
         if bracket_end == -1:
             return None, None, None, {}
@@ -75,23 +62,19 @@ def parse_proxy_url(url):
         else:
             port = None
     else:
-        # Обычный хост: порт отделяется двоеточием
         if ':' in host_part:
             host, port = host_part.split(':', 1)
         else:
             host = host_part
             port = None
     
-    # Парсим параметры
     query_dict = {}
     if query_part:
         query_dict = parse_qs(query_part[1:])
-        # Преобразуем значения из списков в строки (для удобства)
         query_dict = {k: v[0] if v else "" for k, v in query_dict.items()}
     
     return protocol, host, port, query_dict
 
-# Определяем страну по хосту
 def parse_location(host):
     country_map = {
         "ru": "Россия", "us": "США", "de": "Германия", "fr": "Франция",
@@ -114,7 +97,6 @@ def generate_name(host, country_name, country_code):
     return f"{country_name} {city} {flag}".strip()
 
 def apply_protection(protocol, host, port, query):
-    # Защитные параметры
     sni = random.choice(SNI_LIST)
     dns = random.choice(DNS_LIST)
     
@@ -128,16 +110,12 @@ def apply_protection(protocol, host, port, query):
     if protocol == "trojan":
         protection["flow"] = "xtls-rprx-vision"
     
-    # Обновляем параметры, не затирая существующие
     for key, value in protection.items():
         if key not in query or not query[key]:
             query[key] = value
     
-    # Пересобираем URL
-    # Хост с портом
     if port:
         if ':' in host:
-            # IPv6
             host_port = f"[{host}]:{port}"
         else:
             host_port = f"{host}:{port}"
@@ -150,18 +128,7 @@ def apply_protection(protocol, host, port, query):
     query_str = urlencode(query)
     return f"{protocol}://{host_port}?{query_str}"
 
-async def tcp_ping(host, port=443, timeout=1.5):
-    try:
-        reader, writer = await asyncio.wait_for(
-            asyncio.open_connection(host, port),
-            timeout=timeout
-        )
-        writer.close()
-        await writer.wait_closed()
-        return True
-    except:
-        return False
-
+# ⚠️ ВРЕМЕННО УБРАЛИ ПРОВЕРКУ ПИНГА
 async def process_configs(configs):
     valid = []
     tasks = []
@@ -178,21 +145,16 @@ async def process_configs(configs):
             continue
         tasks.append((cfg, proto, host, port, query, country_name, country_code))
     
-    # Проверяем пинг параллельно (по хосту)
-    ping_results = await asyncio.gather(
-        *[tcp_ping(host) for _, _, host, _, _, _, _ in tasks],
-        return_exceptions=True
-    )
-    
-    for (cfg, proto, host, port, query, country_name, country_code), alive in zip(tasks, ping_results):
-        if alive is True:
-            protected_cfg = apply_protection(proto, host, port, query)
-            name = generate_name(host, country_name, country_code)
-            valid.append({"name": name, "url": protected_cfg})
-            if len(valid) >= MAX_SERVERS:
-                break
+    # Проходим по всем без проверки пинга
+    for (cfg, proto, host, port, query, country_name, country_code) in tasks:
+        protected_cfg = apply_protection(proto, host, port, query)
+        name = generate_name(host, country_name, country_code)
+        valid.append({"name": name, "url": protected_cfg})
+        if len(valid) >= MAX_SERVERS:
+            break
     
     valid.sort(key=lambda x: x["name"])
+    print(f"✅ Собрано {len(valid)} серверов (без проверки пинга)")
     return valid
 
 def save_subscription(valid):
@@ -216,9 +178,12 @@ async def main():
     unique = list(set(all_configs))
     print(f"Найдено {len(unique)} уникальных конфигов")
     
-    valid = await process_configs(unique)
-    print(f"Отобрано рабочих серверов: {len(valid)}")
+    # Подсчитаем количество hy2 и trojan
+    hy2_count = sum(1 for c in unique if c.startswith("hy2://"))
+    trojan_count = sum(1 for c in unique if c.startswith("trojan://"))
+    print(f"  - hy2: {hy2_count}, trojan: {trojan_count}")
     
+    valid = await process_configs(unique)
     save_subscription(valid)
     print(f"✅ Готово! Результат в {OUTPUT_FILE}")
 
