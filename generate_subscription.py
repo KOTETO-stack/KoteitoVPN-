@@ -21,11 +21,11 @@ from typing import List, Dict, Optional, Tuple
 MAX_SERVERS = 150
 MAX_PING_MS = 500
 ONLY_PROTOCOLS = ('trojan', 'hysteria2')
-EXCLUDED_COUNTRIES = {'Ukraine', 'Belarus'}  # можно добавить другие
+EXCLUDED_COUNTRIES = {'Ukraine', 'Belarus'}
 SNI_MASK = 'yandex.ru'
 ADGUARD_DNS = 'dns.adguard.com'
 
-# ---------- ИСТОЧНИКИ (более 12 надёжных публичных агрегаторов) ----------
+# ---------- ИСТОЧНИКИ ----------
 SOURCES = [
     'https://raw.githubusercontent.com/Argh94/Proxy-List/main/trojan/trojan.txt',
     'https://raw.githubusercontent.com/Argh94/Proxy-List/main/hysteria/hysteria.txt',
@@ -41,6 +41,16 @@ SOURCES = [
     'https://raw.githubusercontent.com/liMilCo/v2r/main/pro/trojan.txt',
     'https://raw.githubusercontent.com/Sage-77/V2ray-configs/main/trojan.txt',
     'https://raw.githubusercontent.com/Sage-77/V2ray-configs/main/hysteria2.txt',
+    'https://raw.githubusercontent.com/ripaojiedian/freenode/main/trojan.txt',
+    'https://raw.githubusercontent.com/ripaojiedian/freenode/main/hysteria2.txt',
+    'https://raw.githubusercontent.com/aiboboxx/v2rayfree/main/v2ray',
+    'https://raw.githubusercontent.com/Pawdroid/Free-servers/main/sub',
+    'https://raw.githubusercontent.com/tsurumi0924/v2ray-agent/main/trojan.txt',
+    'https://raw.githubusercontent.com/aliyagho/Proxy-List/main/trojan.txt',
+    'https://raw.githubusercontent.com/alisalehi1384/v2ray-configs/main/trojan.txt',
+    'https://raw.githubusercontent.com/hamid-gholami/v2ray-configs/main/trojan.txt',
+    'https://raw.githubusercontent.com/MrFarzad/Proxy-List/main/trojan.txt',
+    'https://raw.githubusercontent.com/amirhnajafi/proxy/main/trojan.txt',
 ]
 
 # Словарь перевода стран (дополняйте)
@@ -108,14 +118,25 @@ def parse_uri(line: str) -> Optional[Dict]:
         return None
     if not (line.startswith('trojan://') or line.startswith('hysteria2://')):
         return None
-    parsed = urllib.parse.urlparse(line)
+    try:
+        parsed = urllib.parse.urlparse(line)
+    except:
+        return None
     proto = parsed.scheme.lower()
     if proto not in ONLY_PROTOCOLS:
         return None
     host = parsed.hostname
-    port = parsed.port
-    if not host or not port:
+    if not host:
         return None
+    # Проверяем порт – должен быть целым числом
+    try:
+        port = parsed.port
+        if port is None:
+            return None
+    except ValueError:
+        # Если порт не число (например, '9443-9443'), пропускаем
+        return None
+
     params = dict(urllib.parse.parse_qsl(parsed.query))
     if 'sni' not in params:
         params['sni'] = SNI_MASK
