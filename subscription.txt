@@ -1,47 +1,49 @@
-# Unknown 🏳️ | Ping: 66.7ms | trojan
-trojan://humanity@104.18.152.175:443?fp=chrome&path=%2Fassignment&security=tls&sni=www.ignitelimit.com&type=ws#%E7%BE%8E%E5%9B%BD+CloudFlare%E8%8A%82%E7%82%B9
-# Unknown 🏳️ | Ping: 66.9ms | trojan
-trojan://humanity@104.18.152.225:443?fp=chrome&path=%2Fassignment&security=tls&sni=www.ignitelimit.com&type=ws#%E7%BE%8E%E5%9B%BD+CloudFlare%E8%8A%82%E7%82%B9
-# Unknown 🏳️ | Ping: 67.2ms | trojan
-trojan://humanity@104.18.152.133:443?security=tls&sni=www.ignitelimit.com&type=ws&host=www.ignitelimit.com&path=%2Fassignment#%E7%BE%8E%E5%9B%BD+CloudFlare%E8%8A%82%E7%82%B9
-# Unknown 🏳️ | Ping: 67.2ms | trojan
-trojan://humanity@104.16.174.44:443?security=tls&sni=www.ignitelimit.com&type=ws&path=%2Fassignment#%E7%BE%8E%E5%9B%BD+CloudFlare%E8%8A%82%E7%82%B9
-# Unknown 🏳️ | Ping: 68.1ms | trojan
-trojan://humanity@104.18.152.207:443?fp=chrome&path=%2Fassignment&security=tls&sni=www.ignitelimit.com&type=ws#%E7%BE%8E%E5%9B%BD+CloudFlare%E8%8A%82%E7%82%B9
-# Unknown 🏳️ | Ping: 68.9ms | trojan
-trojan://humanity@104.18.152.208:443?fp=chrome&path=%2Fassignment&security=tls&sni=www.ignitelimit.com&type=ws#%E7%BE%8E%E5%9B%BD+CloudFlare%E8%8A%82%E7%82%B9
-# Unknown 🏳️ | Ping: 69.0ms | vless
-vless://7893b302-3882-4c38-9ab6-6313f1575d1a@172.67.213.31:443?path=/@zyzzzoao&security=tls&encryption=none&insecure=0&host=cf.udpid.org&fp=chrome&type=ws&allowInsecure=0&sni=cf.udpid.org#%E7%BE%8E%E5%9B%BD+CloudFlare%E8%8A%82%E7%82%B9
-# Unknown 🏳️ | Ping: 69.6ms | trojan
-trojan://humanity@104.16.174.71:443?security=tls&sni=www.ignitelimit.com&type=ws&host=www.ignitelimit.com&path=%2Fassignment#%E7%BE%8E%E5%9B%BD+CloudFlare%E8%8A%82%E7%82%B9
-# Unknown 🏳️ | Ping: 76.1ms | vless
-vless://77777777-8a3e-6666-b6d1-a9c5f0e8b3a2@104.18.42.54:443?security=tls&type=ws&path=/&host=faxf32gkfzoxqv.fx6hsv0.ccwu.cc&packetEncoding=xudp&sni=faxf32gkfzoxqv.fx6hsv0.ccwu.cc&fp=chrome#%E7%BE%8E%E5%9B%BD+CloudFlare%E8%8A%82%E7%82%B9
-# Unknown 🏳️ | Ping: 76.2ms | trojan
-trojan://humanity@104.18.152.230:443?fp=chrome&path=%2Fassignment&security=tls&sni=www.ignitelimit.com&type=ws#%E7%BE%8E%E5%9B%BD+CloudFlare%E8%8A%82%E7%82%B9
-# Unknown 🏳️ | Ping: 77.3ms | trojan
-trojan://humanity@104.18.152.233:443?security=tls&sni=www.ignitelimit.com&type=ws&host=www.ignitelimit.com&path=%2Fassignment#%E7%BE%8E%E5%9B%BD+CloudFlare%E8%8A%82%E7%82%B9
-# Unknown 🏳️ | Ping: 77.4ms | trojan
-trojan://humanity@104.18.152.210:443?fp=chrome&path=%2Fassignment&security=tls&sni=www.ignitelimit.com&type=ws#%E7%BE%8E%E5%9B%BD+CloudFlare%E8%8A%82%E7%82%B9
-# Франция 🇫🇷 | Ping: 215.0ms | trojan
-trojan://humanity@join-telegram-channel.tirexnet.kdns.fr:443?security=tls&sni=www.ignitelimit.com&fp=chrome&alpn=h3%2Ch2%2Chttp%2F1.1&type=ws&path=%2Fassignment#%E7%BE%8E%E5%9B%BD+CloudFlare%E8%8A%82%E7%82%B9
-# Unknown 🏳️ | Ping: 274.2ms | vless
-vless://90da514d-8888-4a53-912e-ac2981c8c6ee@188.220.67.245:2087?encryption=none&fp=chrome&path=%2F8f2690e2d016&type=ws#%F0%9F%87%A9%F0%9F%87%AA_DE_%E5%BE%B7%E5%9B%BD
-# Unknown 🏳️ | Ping: 276.4ms | vless
-vless://11af1c47-865a-47c6-92ff-118013655d78@51.158.236.122:8080?encryption=none&type=ws#%F0%9F%87%B3%F0%9F%87%B1_NL_%E8%8D%B7%E5%85%B0
-# Unknown 🏳️ | Ping: 278.8ms | vless
+# Unknown 🏳️ | Ping: 17.2ms | trojan
+trojan://humanity@130.250.137.171:443?path=/assignment&security=tls&insecure=0&host=www.ignitelimit.com&ech=ip.gs+udp://8.8.8.8&type=ws&allowInsecure=0&sni=www.ignitelimit.com#%E5%8A%A0%E6%8B%BF%E5%A4%A7+V2CROSS.COM
+# Unknown 🏳️ | Ping: 18.0ms | trojan
+trojan://humanity@104.26.14.137:443?fp=chrome&path=%2Fassignment&security=tls&sni=www.ignitelimit.com&type=ws#%E7%BE%8E%E5%9B%BD+CloudFlare%E8%8A%82%E7%82%B9
+# Unknown 🏳️ | Ping: 20.8ms | trojan
+trojan://humanity@104.16.174.185:443?fp=chrome&path=%2Fassignment&security=tls&sni=www.ignitelimit.com&type=ws#%E7%BE%8E%E5%9B%BD+CloudFlare%E8%8A%82%E7%82%B9
+# Unknown 🏳️ | Ping: 22.3ms | trojan
+trojan://humanity@104.16.174.117:443?security=tls&sni=www.ignitelimit.com&type=ws&path=%2Fassignment#%E7%BE%8E%E5%9B%BD+CloudFlare%E8%8A%82%E7%82%B9
+# Unknown 🏳️ | Ping: 24.2ms | trojan
+trojan://humanity@104.18.152.187:443?security=tls&sni=www.ignitelimit.com&type=ws&host=www.ignitelimit.com&path=%2Fassignment#%E7%BE%8E%E5%9B%BD+CloudFlare%E8%8A%82%E7%82%B9
+# Unknown 🏳️ | Ping: 24.2ms | trojan
+trojan://humanity@104.16.174.33:443?fp=chrome&path=%2Fassignment&security=tls&sni=www.ignitelimit.com&type=ws#%E7%BE%8E%E5%9B%BD+CloudFlare%E8%8A%82%E7%82%B9
+# Unknown 🏳️ | Ping: 26.6ms | vless
+vless://6202b230-417c-4d8e-b624-0f71afa9c75d@50.62.195.50:8880?security=none&type=ws&path=/?ed=2560&https://t.me/youtube@ZYFXS🇨🇳&host=vms.lifetime38.workers.dev&packetEncoding=xudp#%E7%BE%8E%E5%9B%BD+%E4%BA%9A%E5%88%A9%E6%A1%91%E9%82%A3%E5%B7%9E%E6%96%AF%E7%A7%91%E8%8C%A8%E4%BB%A3%E5%B0%94%E5%B8%82Go+Daddy%E9%9B%86%E5%9B%A2%E5%85%AC%E5%8F%B8
+# Unknown 🏳️ | Ping: 26.7ms | trojan
+trojan://humanity@104.17.111.4:443?security=tls&sni=www.ignitelimit.com&type=ws&host=www.ignitelimit.com&path=%2Fassignment#%E7%BE%8E%E5%9B%BD+CloudFlare%E8%8A%82%E7%82%B9
+# Unknown 🏳️ | Ping: 27.4ms | trojan
+trojan://humanity@104.20.6.134:443?security=tls&sni=www.ignitelimit.com&fp=chrome&type=ws&path=%2Fassignment#%E7%BE%8E%E5%9B%BD+CloudFlare%E8%8A%82%E7%82%B9
+# Unknown 🏳️ | Ping: 28.0ms | trojan
+trojan://humanity@104.16.174.109:443?fp=chrome&path=%2Fassignment&security=tls&sni=www.ignitelimit.com&type=ws#%E7%BE%8E%E5%9B%BD+CloudFlare%E8%8A%82%E7%82%B9
+# Unknown 🏳️ | Ping: 28.4ms | vless
+vless://7a629a11-b75a-4889-957d-dc0987a73a19@188.114.97.6:2086?security=none&type=ws&path=/eyJqdW5rIjoieVMzbmVFWlBsd3prIiwicHJvdG9jb2wiOiJ2bCIsIm1vZGUiOiJwcmVmaXgiLCJwYW5lbElQcyI6WyJbMjYwMjpmYzU5OmIwOjY0OjpdIl19?ed&host=jimifree.jimshofree1.workers.dev&packetEncoding=xudp&encryption=none#%E5%B7%B4%E8%A5%BF%E5%9C%A3%E4%BF%9D%E7%BD%97+CloudFlare%E8%8A%82%E7%82%B9
+# Unknown 🏳️ | Ping: 31.9ms | vless
+vless://28607fa7-db30-47d6-942a-f5744e4be9ad@45.130.125.96:443?path=/id-pusat&security=tls&encryption=none&insecure=1&host=dfsuporte.garena.com.ex33r.eu.cc&type=ws&allowInsecure=1&sni=dfsuporte.garena.com.ex33r.eu.cc#%E7%BE%8E%E5%9B%BD+V2CROSS.COM
+# Unknown 🏳️ | Ping: 36.5ms | vless
+vless://6202b230-417c-4d8e-b624-0f71afa9c75d@80.93.202.40:8880?security=none&type=ws&path=/&host=vms.lifetime02.workers.dev&packetEncoding=none#%E8%8B%B1%E5%9B%BD+V2CROSS.COM
+# Unknown 🏳️ | Ping: 40.5ms | vless
+vless://6202b230-417c-4d8e-b624-0f71afa9c75d@185.148.106.30:8880?security=none&type=ws&path=/&host=vms.lifetime54.workers.dev&packetEncoding=xudp&encryption=none#%E7%AB%8B%E9%99%B6%E5%AE%9B+V2CROSS.COM
+# Unknown 🏳️ | Ping: 45.8ms | vless
+vless://e081da45-9fae-4687-9376-f9a6a0dbbe83@172.66.170.172:80?security=none&type=ws&path=/id-amz&host=e33xr.qzz.io&packetEncoding=xudp&encryption=none#%E7%BE%8E%E5%9B%BD+CloudFlare%E8%8A%82%E7%82%B9
+# Unknown 🏳️ | Ping: 46.0ms | vless
+vless://47fcef29-ab4e-4aa6-932b-d95a18f28a4e@188.114.97.6:2052?security=none&type=ws&path=/?ed=2560&host=zb1zi.s3nx.dyz.hh.vavava.kdns.fr&packetEncoding=xudp#%E5%B7%B4%E8%A5%BF%E5%9C%A3%E4%BF%9D%E7%BD%97+CloudFlare%E8%8A%82%E7%82%B9
+# Unknown 🏳️ | Ping: 46.1ms | trojan
+trojan://humanity@104.18.152.244:443?security=tls&sni=www.ignitelimit.com&type=ws&host=www.ignitelimit.com&path=%2Fassignment#%E7%BE%8E%E5%9B%BD+CloudFlare%E8%8A%82%E7%82%B9
+# Unknown 🏳️ | Ping: 128.1ms | trojan
+trojan://i99Cef@207.246.97.36:29739?allowInsecure=1&security=tls&sni=download.windowsupdate.com#%F0%9F%87%BA%F0%9F%87%B8_US_%E7%BE%8E%E5%9B%BD
+# Unknown 🏳️ | Ping: 211.9ms | vless
 vless://56ba5d34-ef22-4ba6-8090-4188b807df54@163.8.195.241:2087?fp=chrome&path=%2F29c8fed7ca22&type=ws#%F0%9F%87%A9%F0%9F%87%AA_DE_%E5%BE%B7%E5%9B%BD
-# Unknown 🏳️ | Ping: 280.8ms | vless
-vless://b229d38c-35ec-4a0b-9c86-8fceba243d6c@176.96.138.122:443?flow=xtls-rprx-vision&fp=qq&pbk=O_YZOJVON0LE1U01hAtNUOVRy7z6fkBUXbMtpCGoGEg&security=tls&sni=plucky-xenon.cdn.cachefleet.com#%F0%9F%87%A9%F0%9F%87%AA_DE_%E5%BE%B7%E5%9B%BD
-# Unknown 🏳️ | Ping: 297.2ms | vless
-vless://871bfce7-8440-4394-8d82-56b51f20fdad@18.183.215.124:28573?security=reality&type=raw&packetEncoding=xudp&sni=www.sony.com&fp=firefox&flow=xtls-rprx-vision&sid=03653bc03be10c97&pbk=1DJr9toke7FRuSXjibBVuNvRnLnJnN5kXwUBG6Romzg#%E6%97%A5%E6%9C%AC+%E4%B8%9C%E4%BA%AC%E9%83%BDAmazon%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83
-# Unknown 🏳️ | Ping: 333.7ms | vless
-vless://bf443e4a-aa9e-4509-abf0-d0f6828d57be@178.95.170.83:2087?fp=chrome&path=%2F4bc027a44532&type=ws#%F0%9F%87%B5%F0%9F%87%B1_PL_%E6%B3%A2%E5%85%B0-%3E%F0%9F%87%B3%F0%9F%87%B1_NL_%E8%8D%B7%E5%85%B0
-# Unknown 🏳️ | Ping: 338.0ms | trojan
-trojan://humanity@141.101.90.101:443?security=tls&sni=www.ignitelimit.com&type=ws&host=www.ignitelimit.com&path=%2Fassignment#%E6%B3%95%E5%9B%BD%E5%B7%B4%E9%BB%8E+CloudFlare%E8%8A%82%E7%82%B9
-# Unknown 🏳️ | Ping: 410.1ms | vless
-vless://af00e0c4-decf-48f2-9013-56abe9c9efcd@rrr.windconnect.pro:443?encryption=none&flow=xtls-rprx-vision&fp=firefox&pbk=BsFRd4pZgH2hK2AmVf6Mv7z2QGmV2LPYbqkT1UqZX30&security=tls&sid=4da5d1853f04af6d&sni=rrr.windconnect.pro&type=tcp#%F0%9F%87%B7%F0%9F%87%BA_RU_%E4%BF%84%E7%BD%97%E6%96%AF-%3E%F0%9F%87%A9%F0%9F%87%AA_DE_%E5%BE%B7%E5%9B%BD
-# Unknown 🏳️ | Ping: 416.6ms | vless
-vless://af00e0c4-decf-48f2-9013-56abe9c9efcd@rrr.windconnect.pro:443?security=reality&type=tcp&packetEncoding=xudp&sni=rrr.windconnect.pro&fp=firefox&flow=xtls-rprx-vision&sid=4da5d1853f04af6d&pbk=BsFRd4pZgH2hK2AmVf6Mv7z2QGmV2LPYbqkT1UqZX30&encryption=none#%E8%8B%B1%E5%9B%BD+V2CROSS.COM
+# Unknown 🏳️ | Ping: 271.0ms | vless
+vless://2c7f1414-87ae-4a01-9796-a02c067891a6@176.109.88.216:443?security=reality&encryption=none&pbk=oqRus6Z_Q1jqJaTEPu7ENbRL0-XKOw54K0jwCCGLtEk&headerType=none&fp=chrome&type=tcp&flow=xtls-rprx-vision&sni=api-maps.yandex.ru&sid=a9c4f17e3b62d8#%E4%BF%84%E7%BD%97%E6%96%AF+V2CROSS.COM
+# Unknown 🏳️ | Ping: 281.6ms | vless
+vless://a289a3d3-5833-4b28-8809-ae72898a98d0@45.9.15.206:443?security=tls&type=ws&path=/websocket&host=ru05.abvpn.ru&packetEncoding=xudp&sni=ru05.abvpn.ru&fp=edge#%E6%AC%A7%E7%9B%9F+V2CROSS.COM
+# Unknown 🏳️ | Ping: 340.0ms | trojan
+trojan://i99Cef@45.32.57.242:27242?allowInsecure=1&security=tls&sni=download.windowsupdate.com#%F0%9F%87%AF%F0%9F%87%B5_JP_%E6%97%A5%E6%9C%AC
+# Unknown 🏳️ | Ping: 482.1ms | trojan
+trojan://i99Cef@211.20.156.191:28133?allowInsecure=1&security=tls&sni=ctldl.windowsupdate.com#%F0%9F%87%B9%F0%9F%87%BC_TW_%E4%B8%AD%E5%9B%BD%E5%8F%B0%E6%B9%BE-%3E%F0%9F%87%AF%F0%9F%87%B5_JP_%E6%97%A5%E6%9C%AC
 
 # AdGuard DNS (блокировка рекламы)
 dns://94.140.14.14?name=adguard
