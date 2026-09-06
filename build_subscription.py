@@ -10,7 +10,6 @@ import time
 import os
 import pycountry
 import emoji
-import socket
 
 # ========== КОНФИГ ==========
 MAX_PING = 500
@@ -84,17 +83,6 @@ RUSSIAN_NAMES = {
     "Belarus": "Беларусь",
 }
 
-# ========== СОМНИТЕЛЬНЫЕ ДОМЕНЫ (BNS) ==========
-BNS_BLOCKED_DOMAINS = [
-    "bns.com",
-    "bns.ru",
-    "bns.org",
-    "badware.com",
-    "malware-site.com",
-    "spam-site.net",
-    "phishing-site.org",
-]
-
 SOURCES = [
     "https://raw.githubusercontent.com/iwantonline/FreeV2Ray/main/README.md",
     "https://raw.githubusercontent.com/yebekhe/TelegramV2rayCollector/main/README.md",
@@ -145,14 +133,12 @@ def extract_country_city(raw_name):
     """Извлекает страну и город из имени."""
     clean = re.sub(r'[^\w\s,|_\-]', '', raw_name).strip()
     
-    # Паттерн: страна, город
     match = re.search(r'([A-Za-z\s]+)\s*,\s*([A-Za-z\s]+)', clean)
     if match:
         country = match.group(1).strip()
         city = match.group(2).strip()
         return country, city
     
-    # Паттерн: КОД_Город
     match = re.search(r'([A-Z]{2})[_\-\s]+(.+)', clean)
     if match:
         code = match.group(1)
@@ -164,7 +150,6 @@ def extract_country_city(raw_name):
         except:
             pass
     
-    # Ищем страну в тексте
     for name in [c.name for c in pycountry.countries]:
         if name in clean:
             parts = clean.split(name, 1)
@@ -251,7 +236,7 @@ def ping_server(config_line):
 def check_dns_leak(config_line):
     """
     Проверяет DNS-утечку через прокси.
-    Возвращает True, если DNS не утекает.
+    Возвращает True, если DNS не утекает (запрос идёт через прокси).
     """
     try:
         match = re.search(r'://([^:/]+)(?::(\d+))?', config_line)
@@ -260,7 +245,7 @@ def check_dns_leak(config_line):
         host = match.group(1)
         port = match.group(2) or '443'
         
-        # Пробуем через socks5-hostname (не утекает DNS)
+        # Проверяем через socks5-hostname (не утекает DNS)
         cmd = ["curl", "-s", "--socks5-hostname", f"{host}:{port}", 
                "https://1.1.1.1/dns-query?name=google.com", 
                "-o", "/dev/null", "-w", "%{http_code}"]
@@ -268,7 +253,7 @@ def check_dns_leak(config_line):
         if result.stdout.strip() in ["200", "403"]:
             return True
         
-        # Пробуем через HTTP прокси
+        # Проверяем через HTTP прокси
         cmd = ["curl", "-s", "--proxy", f"http://{host}:{port}", 
                "https://1.1.1.1/dns-query?name=google.com", 
                "-o", "/dev/null", "-w", "%{http_code}"]
@@ -279,33 +264,6 @@ def check_dns_leak(config_line):
         return False
     except:
         return False
-
-def check_bns_block(config_line):
-    """
-    Проверяет блокировку сомнительных доменов (BNS).
-    Возвращает True, если все BNS-домены заблокированы.
-    """
-    try:
-        match = re.search(r'://([^:/]+)(?::(\d+))?', config_line)
-        if not match:
-            return True  # Если не можем проверить, пропускаем
-        host = match.group(1)
-        port = match.group(2) or '443'
-        
-        for domain in BNS_BLOCKED_DOMAINS:
-            # Пробуем через socks5
-            cmd = ["curl", "-s", "--socks5-hostname", f"{host}:{port}", 
-                   f"https://{domain}", "-o", "/dev/null", "-w", "%{http_code}"]
-            result = subprocess.run(cmd, timeout=5, capture_output=True, text=True)
-            status = result.stdout.strip()
-            # Если домен доступен (код 200, 301, 302) - это плохо
-            if status in ["200", "301", "302"]:
-                print(f"⚠️ BNS-домен {domain} доступен через {host}")
-                return False
-        
-        return True
-    except:
-        return True  # Если ошибка, пропускаем
 
 def build_subscription():
     print("🚀 Запуск сборки подписки...")
@@ -326,7 +284,6 @@ def build_subscription():
     save_source_state(state)
     print(f"📥 Всего сырых: {len(all_configs)}")
 
-    # Убираем дубликаты
     seen = set()
     unique = []
     for line in all_configs:
@@ -335,7 +292,6 @@ def build_subscription():
             unique.append(line)
     print(f"📦 Уникальных: {len(unique)}")
 
-    # Парсим конфиги
     parsed = []
     for line in unique:
         p = parse_config_line(line)
@@ -356,7 +312,6 @@ def build_subscription():
                 "ping": None
             })
 
-    # Проверка пинга
     print("📶 Проверка пинга...")
     with concurrent.futures.ThreadPoolExecutor(max_workers=30) as executor:
         future_to_server = {executor.submit(ping_server, s['config']): s for s in parsed}
@@ -373,37 +328,25 @@ def build_subscription():
         print("❌ Нет доступных серверов!")
         return
 
-    # Сортировка по пингу
     available.sort(key=lambda x: x['ping'])
     
-    # Проверка DNS и BNS (только для лучших 200 серверов)
-    print("🔍 Проверка DNS и BNS (может занять время)...")
+    print("🔍 Проверка DNS-утечек (может занять время)...")
     selected = []
-    checked = 0
-    for server in available[:200]:  # Проверяем только первые 200 по пингу
-        checked += 1
-        # Проверяем DNS
-        if not check_dns_leak(server['config']):
+    for server in available[:200]:
+        if check_dns_leak(server['config']):
+            selected.append(server)
+        else:
             print(f"⚠️ DNS-утечка: {server['country']} {server['city']}")
-            continue
         
-        # Проверяем BNS
-        if not check_bns_block(server['config']):
-            print(f"⚠️ BNS-блокировка: {server['country']} {server['city']}")
-            continue
-        
-        selected.append(server)
         if len(selected) >= MAX_SERVERS:
             break
     
-    print(f"✅ После DNS и BNS: {len(selected)} серверов")
+    print(f"✅ После DNS-теста: {len(selected)} серверов")
 
-    # Если нет серверов после проверок, берём только по пингу
     if not selected:
-        print("⚠️ Все серверы не прошли проверку. Берём лучшие по пингу.")
+        print("⚠️ Все серверы не прошли DNS-тест. Берём лучшие по пингу.")
         selected = available[:MAX_SERVERS]
 
-    # Формируем названия
     for s in selected:
         if s['country'] == "Сервер":
             s['name'] = f"{s['country']} {s['city']} {s['flag']}"
@@ -414,7 +357,6 @@ def build_subscription():
             else:
                 s['name'] = f"{s['country']} {s['flag']}"
 
-    # Запись подписки
     output_lines = []
     for s in selected:
         output_lines.append(f"# {s['name']} | Ping: {s['ping']}ms | {s['protocol']}")
@@ -422,7 +364,6 @@ def build_subscription():
     output_lines.append("\n# AdGuard DNS (блокировка рекламы)")
     output_lines.append("dns://94.140.14.14?name=adguard")
     output_lines.append("# Тест утечки DNS: https://www.dnsleaktest.com/")
-    output_lines.append("# BNS-блокировка: активирована")
 
     with open("subscription.txt", "w", encoding="utf-8") as f:
         f.write("\n".join(output_lines))
