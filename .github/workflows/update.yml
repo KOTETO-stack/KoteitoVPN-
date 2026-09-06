@@ -19,18 +19,12 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Установка зависимостей (если есть requirements.txt)
+      - name: Установка зависимостей (пропускается, если файла нет)
         run: |
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      # Этот шаг покажет вам, как называется ваш скрипт
-      - name: Показать файлы в репозитории
-        run: ls -la
-
       - name: Запуск генератора
-        run: |
-          # ВАЖНО: Замените main.py на имя вашего файла из шага выше!
-          python main.py
+        run: python generate_subscription.py
 
       - name: Коммит и пуш
         run: |
