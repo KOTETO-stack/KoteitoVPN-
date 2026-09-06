@@ -10,9 +10,11 @@ import emoji
 SOURCES_FILE = "sources.txt"
 OUTPUT_FILE = "ready.txt"
 MAX_SERVERS = 150
+MAX_PING_MS = 500
 EXCLUDED_COUNTRIES = {"UA"}
 EXCLUDED_KEYWORDS = ["bns", "bnx"]
 ALLOWED_PROTOCOLS = {"hy2", "trojan"}
+PING_TIMEOUT = 3.0  # секунд на TCP-connect
 
 SNI_LIST = [
     "www.yandex.ru",
@@ -42,7 +44,6 @@ async def fetch_configs(session, url):
         return []
     return []
 
-# Безопасный парсинг URL с поддержкой IPv6
 def parse_proxy_url(url):
     match = re.match(r'^(hy2|trojan)://([^?#]+)(\?.*)?$', url)
     if not match:
@@ -125,13 +126,28 @@ def apply_protection(protocol, host, port, query):
         else:
             host_port = host
     
-    query_str = urlencode(query)
+    query_str = urlencode(query, safe="%")
     return f"{protocol}://{host_port}?{query_str}"
 
-# ⚠️ ВРЕМЕННО УБРАЛИ ПРОВЕРКУ ПИНГА
+# Проверка пинга через TCP-connect на реальный порт сервера
+async def tcp_ping(host, port, timeout=PING_TIMEOUT):
+    try:
+        if not port:
+            # Если порт не указан, используем 443
+            port = 443
+        reader, writer = await asyncio.wait_for(
+            asyncio.open_connection(host, int(port)),
+            timeout=timeout
+        )
+        writer.close()
+        await writer.wait_closed()
+        return True
+    except:
+        return False
+
 async def process_configs(configs):
     valid = []
-    tasks = []
+    tasks_data = []
     for cfg in configs:
         proto, host, port, query = parse_proxy_url(cfg)
         if not proto or not host:
@@ -143,18 +159,22 @@ async def process_configs(configs):
         country_name, country_code = parse_location(host)
         if country_code in EXCLUDED_COUNTRIES:
             continue
-        tasks.append((cfg, proto, host, port, query, country_name, country_code))
+        tasks_data.append((cfg, proto, host, port, query, country_name, country_code))
     
-    # Проходим по всем без проверки пинга
-    for (cfg, proto, host, port, query, country_name, country_code) in tasks:
-        protected_cfg = apply_protection(proto, host, port, query)
-        name = generate_name(host, country_name, country_code)
-        valid.append({"name": name, "url": protected_cfg})
-        if len(valid) >= MAX_SERVERS:
-            break
+    # Параллельная проверка пинга для всех
+    ping_tasks = [tcp_ping(host, port or 443) for (_, _, host, port, _, _, _) in tasks_data]
+    ping_results = await asyncio.gather(*ping_tasks, return_exceptions=True)
+    
+    for (cfg, proto, host, port, query, country_name, country_code), alive in zip(tasks_data, ping_results):
+        if alive is True:
+            protected_cfg = apply_protection(proto, host, port, query)
+            name = generate_name(host, country_name, country_code)
+            valid.append({"name": name, "url": protected_cfg})
+            if len(valid) >= MAX_SERVERS:
+                break
     
     valid.sort(key=lambda x: x["name"])
-    print(f"✅ Собрано {len(valid)} серверов (без проверки пинга)")
+    print(f"✅ Отобрано {len(valid)} серверов с пингом < {MAX_PING_MS} мс")
     return valid
 
 def save_subscription(valid):
@@ -168,6 +188,7 @@ def save_subscription(valid):
 
 async def main():
     sources = load_sources()
+    print(f"📡 Загружаем конфиги из {len(sources)} источников...")
     async with aiohttp.ClientSession() as session:
         tasks = [fetch_configs(session, url) for url in sources]
         results = await asyncio.gather(*tasks)
@@ -178,14 +199,13 @@ async def main():
     unique = list(set(all_configs))
     print(f"Найдено {len(unique)} уникальных конфигов")
     
-    # Подсчитаем количество hy2 и trojan
     hy2_count = sum(1 for c in unique if c.startswith("hy2://"))
     trojan_count = sum(1 for c in unique if c.startswith("trojan://"))
     print(f"  - hy2: {hy2_count}, trojan: {trojan_count}")
     
     valid = await process_configs(unique)
     save_subscription(valid)
-    print(f"✅ Готово! Результат в {OUTPUT_FILE}")
+    print(f"✅ Готово! Результат в {OUTPUT_FILE} (Base64)")
 
 if __name__ == "__main__":
     asyncio.run(main())
