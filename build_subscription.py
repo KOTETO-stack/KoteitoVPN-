@@ -14,12 +14,75 @@ import emoji
 # ========== КОНФИГ ==========
 MAX_PING = 500
 MAX_SERVERS = 150
-ALLOWED_PROTOCOLS = ["vless", "trojan", "hy2"]   # Добавил VLESS
+ALLOWED_PROTOCOLS = ["vless", "trojan", "hy2"]
 EXCLUDED_COUNTRIES = ["Ukraine", "Russia"]
 STATE_FILE = "source_state.json"
 FAIL_THRESHOLD = 3
 
-# ========== МНОГО ИСТОЧНИКОВ ==========
+# ========== РУССКИЕ НАЗВАНИЯ СТРАН ==========
+RUSSIAN_NAMES = {
+    "United States": "США",
+    "United Kingdom": "Великобритания",
+    "Germany": "Германия",
+    "France": "Франция",
+    "Japan": "Япония",
+    "Singapore": "Сингапур",
+    "Netherlands": "Нидерланды",
+    "Canada": "Канада",
+    "Australia": "Австралия",
+    "India": "Индия",
+    "Brazil": "Бразилия",
+    "Italy": "Италия",
+    "Spain": "Испания",
+    "Turkey": "Турция",
+    "Poland": "Польша",
+    "South Korea": "Южная Корея",
+    "Taiwan": "Тайвань",
+    "Hong Kong": "Гонконг",
+    "Macao": "Макао",
+    "Switzerland": "Швейцария",
+    "Austria": "Австрия",
+    "Belgium": "Бельгия",
+    "Sweden": "Швеция",
+    "Norway": "Норвегия",
+    "Denmark": "Дания",
+    "Finland": "Финляндия",
+    "Israel": "Израиль",
+    "Malaysia": "Малайзия",
+    "Vietnam": "Вьетнам",
+    "Philippines": "Филиппины",
+    "New Zealand": "Новая Зеландия",
+    "Argentina": "Аргентина",
+    "Chile": "Чили",
+    "Colombia": "Колумбия",
+    "Peru": "Перу",
+    "Venezuela": "Венесуэла",
+    "Egypt": "Египет",
+    "South Africa": "ЮАР",
+    "Nigeria": "Нигерия",
+    "Kenya": "Кения",
+    "Morocco": "Марокко",
+    "UAE": "ОАЭ",
+    "Saudi Arabia": "Саудовская Аравия",
+    "Qatar": "Катар",
+    "Kuwait": "Кувейт",
+    "Oman": "Оман",
+    "Bahrain": "Бахрейн",
+    "Jordan": "Иордания",
+    "Lebanon": "Ливан",
+    "Pakistan": "Пакистан",
+    "Bangladesh": "Бангладеш",
+    "Sri Lanka": "Шри-Ланка",
+    "Nepal": "Непал",
+    "Kazakhstan": "Казахстан",
+    "Uzbekistan": "Узбекистан",
+    "Azerbaijan": "Азербайджан",
+    "Armenia": "Армения",
+    "Georgia": "Грузия",
+    "Moldova": "Молдова",
+    "Belarus": "Беларусь",
+}
+
 SOURCES = [
     "https://raw.githubusercontent.com/iwantonline/FreeV2Ray/main/README.md",
     "https://raw.githubusercontent.com/yebekhe/TelegramV2rayCollector/main/README.md",
@@ -40,8 +103,6 @@ SOURCES = [
     "https://raw.githubusercontent.com/ryanreese99/v2ray-configs/main/v2ray.txt",
     "https://raw.githubusercontent.com/zhuxindong/FreeV2Ray/main/v2ray",
     "https://raw.githubusercontent.com/AirportR/FreeV2ray/refs/heads/main/README.md",
-    "https://raw.githubusercontent.com/v2fly/v2ray-examples/main/README.md",
-    "https://raw.githubusercontent.com/XTLS/Xray-examples/main/README.md",
 ]
 
 def load_source_state():
@@ -55,8 +116,6 @@ def save_source_state(state):
         json.dump(state, f)
 
 def get_country_flag(country_name):
-    if country_name == "Unknown":
-        return "🏳️"
     try:
         country = pycountry.countries.get(name=country_name)
         if not country:
@@ -68,49 +127,26 @@ def get_country_flag(country_name):
     return "🏳️"
 
 def get_country_ru(country_name):
-    if country_name == "Unknown":
-        return "Unknown"
-    ru_names = {
-        "United States": "США",
-        "United Kingdom": "Великобритания",
-        "Germany": "Германия",
-        "France": "Франция",
-        "Japan": "Япония",
-        "Singapore": "Сингапур",
-        "Netherlands": "Нидерланды",
-        "Canada": "Канада",
-        "Australia": "Австралия",
-        "India": "Индия",
-        "Brazil": "Бразилия",
-        "Italy": "Италия",
-        "Spain": "Испания",
-        "Turkey": "Турция",
-        "Poland": "Польша",
-        "South Korea": "Южная Корея",
-        "Taiwan": "Тайвань",
-        "Hong Kong": "Гонконг",
-        "Macao": "Макао",
-        "Switzerland": "Швейцария",
-        "Austria": "Австрия",
-        "Belgium": "Бельгия",
-        "Sweden": "Швеция",
-        "Norway": "Норвегия",
-        "Denmark": "Дания",
-        "Finland": "Финляндия",
-        "Israel": "Израиль",
-        "Malaysia": "Малайзия",
-        "Vietnam": "Вьетнам",
-        "Philippines": "Филиппины",
-        "New Zealand": "Новая Зеландия"
-    }
-    return ru_names.get(country_name, country_name)
+    """Возвращает русское название страны"""
+    return RUSSIAN_NAMES.get(country_name, country_name)
 
 def extract_country_city(raw_name):
-    """Пытается извлечь страну и город, возвращает (страна, город) или (None, None)"""
-    # Удаляем все эмодзи (включая флаги)
-    clean = re.sub(r'[^\w\s\-_]', '', raw_name).strip()
-    # Ищем двухбуквенный код в начале
-    match = re.search(r'^([A-Z]{2})[_\-\s]+(.+)', clean)
+    """
+    Извлекает страну и город из имени.
+    Примеры:
+    - 🇳🇱The Netherlands, Amsterdam | [BL]-2  -> (Netherlands, Amsterdam)
+    - US_Нью-Йорк  -> (United States, Нью-Йорк)
+    - DE_Франкфурт -> (Germany, Франкфурт)
+    """
+    clean = re.sub(r'[^\w\s,|_\-]', '', raw_name).strip()
+    
+    match = re.search(r'([A-Za-z\s]+)\s*,\s*([A-Za-z\s]+)', clean)
+    if match:
+        country = match.group(1).strip()
+        city = match.group(2).strip()
+        return country, city
+    
+    match = re.search(r'([A-Z]{2})[_\-\s]+(.+)', clean)
     if match:
         code = match.group(1)
         city = match.group(2).strip()
@@ -120,36 +156,18 @@ def extract_country_city(raw_name):
                 return country.name, city
         except:
             pass
-    # Если есть дефис, пробуем разделить
-    if '-' in clean:
-        parts = clean.split('-')
-        if len(parts) >= 2:
-            first = parts[0].strip()
-            second = parts[1].strip()
-            if len(first) == 2 and first.isalpha():
-                try:
-                    country = pycountry.countries.get(alpha_2=first.upper())
-                    if country:
-                        return country.name, second
-                except:
-                    pass
-            else:
-                try:
-                    country = pycountry.countries.get(name=first)
-                    if country:
-                        return country.name, second
-                except:
-                    pass
-    # Если не удалось, пробуем взять первое слово как код страны
-    words = clean.split()
-    if words and len(words[0]) == 2 and words[0].isalpha():
-        try:
-            country = pycountry.countries.get(alpha_2=words[0].upper())
-            if country:
-                city = " ".join(words[1:]) if len(words) > 1 else "Unknown"
-                return country.name, city
-        except:
-            pass
+    
+    country_names = [c.name for c in pycountry.countries]
+    for name in country_names:
+        if name in clean:
+            parts = clean.split(name, 1)
+            if len(parts) > 1:
+                city_part = parts[1].strip()
+                city_part = re.sub(r'^[,|\s]+', '', city_part)
+                city_part = re.sub(r'[|].*$', '', city_part).strip()
+                if city_part:
+                    return name, city_part
+    
     return None, None
 
 def parse_config_line(line):
@@ -157,16 +175,13 @@ def parse_config_line(line):
         return None
     proto = line.split("://")[0]
     
-    # Ищем имя #...
     match = re.search(r'#(.+?)(?:\n|$)', line)
-    raw_name = match.group(1).strip() if match else ""
+    if not match:
+        return None
     
-    country = None
-    city = None
-    if raw_name:
-        country, city = extract_country_city(raw_name)
+    raw_name = match.group(1).strip()
+    country, city = extract_country_city(raw_name)
     
-    # Если не удалось определить страну, пробуем по TLD домена (из конфига)
     if not country:
         match2 = re.search(r'://([^@]+@)?([^:/]+)', line)
         if match2:
@@ -180,17 +195,15 @@ def parse_config_line(line):
             except:
                 pass
     
-    # Если всё равно не определили, ставим Unknown
     if not country:
-        country = "Unknown"
-        city = "Unknown"
+        return None
     
-    # Исключаем нежелательные страны
     if country in EXCLUDED_COUNTRIES:
         return None
     
     country_ru = get_country_ru(country)
     flag = get_country_flag(country)
+    
     return {
         "protocol": proto,
         "config": line,
@@ -233,7 +246,7 @@ def build_subscription():
     all_configs = []
     for url in SOURCES:
         if url in state and state[url] >= FAIL_THRESHOLD:
-            print(f"⏭️ Источник {url} временно исключён (неудач: {state[url]})")
+            print(f"⏭️ {url} исключён")
             continue
         lines = fetch_lines_from_url(url)
         if lines:
@@ -242,37 +255,38 @@ def build_subscription():
             state[url] = 0
         else:
             state[url] = state.get(url, 0) + 1
-            print(f"❌ {url} не дал конфигов (неудач: {state[url]})")
+            print(f"❌ {url} неудач: {state[url]}")
     save_source_state(state)
-    print(f"📥 Всего получено сырых строк: {len(all_configs)}")
+    print(f"📥 Всего сырых: {len(all_configs)}")
 
-    # Считаем протоколы для отладки
-    proto_counts = {}
-    for line in all_configs:
-        proto = line.split("://")[0]
-        proto_counts[proto] = proto_counts.get(proto, 0) + 1
-    print(f"📊 Протоколы: {proto_counts}")
-
-    # Парсим и удаляем дубликаты
     seen = set()
-    parsed = []
+    unique = []
     for line in all_configs:
-        if line in seen:
-            continue
-        seen.add(line)
+        if line not in seen:
+            seen.add(line)
+            unique.append(line)
+    print(f"📦 Уникальных: {len(unique)}")
+
+    parsed = []
+    for line in unique:
         p = parse_config_line(line)
         if p:
             parsed.append(p)
-    print(f"🔍 После парсинга и фильтрации: {len(parsed)} серверов")
+    print(f"🔍 После парсинга: {len(parsed)} серверов")
 
     if not parsed:
-        print("⚠️ Нет ни одного сервера после парсинга. Проверьте имена в источниках.")
-        # Для отладки выведем первые 3 строки (но в логах Actions это будет видно)
-        for i, line in enumerate(all_configs[:3]):
-            print(f"Пример строки {i+1}: {line[:100]}...")
-        return
+        print("⚠️ Нет серверов после парсинга. Возвращаюсь к упрощённому формату.")
+        for idx, line in enumerate(unique, 1):
+            proto = line.split("://")[0]
+            parsed.append({
+                "protocol": proto,
+                "config": line,
+                "country": "Сервер",
+                "city": str(idx),
+                "flag": "🏳️",
+                "ping": None
+            })
 
-    # Проверка пинга
     with concurrent.futures.ThreadPoolExecutor(max_workers=30) as executor:
         future_to_server = {executor.submit(ping_server, s['config']): s for s in parsed}
         for future in concurrent.futures.as_completed(future_to_server):
@@ -286,15 +300,16 @@ def build_subscription():
     available.sort(key=lambda x: x['ping'])
     selected = available[:MAX_SERVERS]
 
-    # Формируем названия
     for s in selected:
-        city_part = s['city'] if s['city'] != "Unknown" else ""
-        if city_part:
-            s['name'] = f"{s['country']} {city_part} {s['flag']}"
+        if s['country'] == "Сервер":
+            s['name'] = f"{s['country']} {s['city']} {s['flag']}"
         else:
-            s['name'] = f"{s['country']} {s['flag']}"
+            city_part = s['city'] if s['city'] != "Unknown" else ""
+            if city_part:
+                s['name'] = f"{s['country']} {city_part} {s['flag']}"
+            else:
+                s['name'] = f"{s['country']} {s['flag']}"
 
-    # Запись подписки
     output_lines = []
     for s in selected:
         output_lines.append(f"# {s['name']} | Ping: {s['ping']}ms | {s['protocol']}")
