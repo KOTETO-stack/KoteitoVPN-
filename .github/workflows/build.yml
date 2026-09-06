@@ -1,4 +1,4 @@
-name: BNS Test
+name: DNS Test
 
 on:
   workflow_dispatch:  # Ручной запуск
