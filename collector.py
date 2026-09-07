@@ -14,7 +14,7 @@ MAX_PING_MS = 500
 EXCLUDED_COUNTRIES = {"UA"}
 EXCLUDED_KEYWORDS = ["bns", "bnx"]
 ALLOWED_PROTOCOLS = {"hy2", "trojan"}
-PING_TIMEOUT = 3.0  # секунд на TCP-connect
+PING_TIMEOUT = 5.0  # увеличен до 5 секунд
 
 SNI_LIST = [
     "www.yandex.ru",
@@ -35,7 +35,7 @@ def load_sources():
 
 async def fetch_configs(session, url):
     try:
-        async with session.get(url, timeout=10) as resp:
+        async with session.get(url, timeout=15) as resp:
             if resp.status == 200:
                 text = await resp.text()
                 configs = re.findall(r'(hy2://[^\s]+|trojan://[^\s]+)', text)
@@ -133,7 +133,6 @@ def apply_protection(protocol, host, port, query):
 async def tcp_ping(host, port, timeout=PING_TIMEOUT):
     try:
         if not port:
-            # Если порт не указан, используем 443
             port = 443
         reader, writer = await asyncio.wait_for(
             asyncio.open_connection(host, int(port)),
@@ -145,7 +144,8 @@ async def tcp_ping(host, port, timeout=PING_TIMEOUT):
     except:
         return False
 
-async def process_configs(configs):
+# Сбор с проверкой пинга
+async def process_with_ping(configs):
     valid = []
     tasks_data = []
     for cfg in configs:
@@ -174,7 +174,28 @@ async def process_configs(configs):
                 break
     
     valid.sort(key=lambda x: x["name"])
-    print(f"✅ Отобрано {len(valid)} серверов с пингом < {MAX_PING_MS} мс")
+    return valid
+
+# Сбор без пинга (fallback)
+def process_without_ping(configs):
+    valid = []
+    for cfg in configs:
+        proto, host, port, query = parse_proxy_url(cfg)
+        if not proto or not host:
+            continue
+        if proto not in ALLOWED_PROTOCOLS:
+            continue
+        if any(kw in cfg.lower() for kw in EXCLUDED_KEYWORDS):
+            continue
+        country_name, country_code = parse_location(host)
+        if country_code in EXCLUDED_COUNTRIES:
+            continue
+        protected_cfg = apply_protection(proto, host, port, query)
+        name = generate_name(host, country_name, country_code)
+        valid.append({"name": name, "url": protected_cfg})
+        if len(valid) >= MAX_SERVERS:
+            break
+    valid.sort(key=lambda x: x["name"])
     return valid
 
 def save_subscription(valid):
@@ -203,7 +224,17 @@ async def main():
     trojan_count = sum(1 for c in unique if c.startswith("trojan://"))
     print(f"  - hy2: {hy2_count}, trojan: {trojan_count}")
     
-    valid = await process_configs(unique)
+    # Пробуем с пингом
+    print("🔄 Проверяем пинг (таймаут 5 сек)...")
+    valid = await process_with_ping(unique)
+    
+    if len(valid) == 0:
+        print("⚠️ Ни один сервер не прошёл пинг. Переключаемся в режим БЕЗ пинга.")
+        valid = process_without_ping(unique)
+        print(f"✅ Собрано {len(valid)} серверов (без проверки пинга)")
+    else:
+        print(f"✅ Отобрано {len(valid)} серверов с пингом < {MAX_PING_MS} мс")
+    
     save_subscription(valid)
     print(f"✅ Готово! Результат в {OUTPUT_FILE} (Base64)")
 
