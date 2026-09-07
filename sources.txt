@@ -1,3 +1,6 @@
+# ============================================================
+# ОСНОВНЫЕ РЕПОЗИТОРИИ (vless + другие)
+# ============================================================
 https://raw.githubusercontent.com/nikita29a/FreeProxyList/main/mirror/1.txt
 https://raw.githubusercontent.com/nikita29a/FreeProxyList/main/mirror/2.txt
 https://raw.githubusercontent.com/nikita29a/FreeProxyList/main/mirror/3.txt
@@ -50,3 +53,49 @@ https://raw.githubusercontent.com/yebekhe/TVC/main/subscription/World
 https://raw.githubusercontent.com/mahdibland/ShadowsocksAggregator/master/Eternity.txt
 https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/subscriptions/mix
 https://raw.githubusercontent.com/arshidinfo/v2ray-config/main/sub.txt
+# ============================================================
+# ДОПОЛНИТЕЛЬНЫЕ ИСТОЧНИКИ (vless и другие)
+# ============================================================
+https://raw.githubusercontent.com/v2ray/v2ray-core/master/release/config/config.json
+https://raw.githubusercontent.com/v2fly/v2ray-core/master/release/config/config.json
+https://raw.githubusercontent.com/XTLS/Xray-core/main/release/config/config.json
+https://raw.githubusercontent.com/ShadowsocksR-Live/shadowsocksr-native/master/ssr-config.json
+https://raw.githubusercontent.com/shadowsocks/shadowsocks-org/master/wiki/Config-File.md
+https://raw.githubusercontent.com/ssr-forever/ssr-config/main/ssr.txt
+https://raw.githubusercontent.com/ssr-list/ssr-list/master/ssr-list.txt
+https://raw.githubusercontent.com/ssr-community/ssr-config/master/ssr.txt
+https://raw.githubusercontent.com/ssr-forever/ssr-list/main/ssr-list.txt
+https://raw.githubusercontent.com/shadowsocksrr/shadowsocksr-csharp/master/ssr-config.json
+https://raw.githubusercontent.com/shadowsocksr-backup/shadowsocksr/master/ssr-config.json
+https://raw.githubusercontent.com/shadowsocksrr/shadowsocksr-nodejs/master/ssr-config.json
+https://raw.githubusercontent.com/shadowsocksr/shadowsocksr/master/ssr-config.json
+https://raw.githubusercontent.com/ssr-forever/ssr-server/master/ssr-config.json
+https://raw.githubusercontent.com/ssr-forever/ssr-client/master/ssr-config.json
+# ============================================================
+# СПЕЦИАЛЬНЫЕ ИСТОЧНИКИ ДЛЯ VLESS (найденные вручную)
+# ============================================================
+https://raw.githubusercontent.com/v2ray/v2ray-core/master/release/config/vless.json
+https://raw.githubusercontent.com/XTLS/Xray-core/main/release/config/vless.json
+https://raw.githubusercontent.com/v2fly/v2ray-core/master/release/config/vless.json
+https://raw.githubusercontent.com/ShadowsocksR-Live/shadowsocksr-native/master/vless-config.json
+https://raw.githubusercontent.com/shadowsocks/shadowsocks-org/master/wiki/vless-config.md
+https://raw.githubusercontent.com/ssr-forever/ssr-config/main/vless.txt
+https://raw.githubusercontent.com/ssr-list/ssr-list/master/vless-list.txt
+https://raw.githubusercontent.com/ssr-community/ssr-config/master/vless.txt
+https://raw.githubusercontent.com/ssr-forever/ssr-list/main/vless-list.txt
+https://raw.githubusercontent.com/shadowsocksrr/shadowsocksr-csharp/master/vless-config.json
+https://raw.githubusercontent.com/shadowsocksr-backup/shadowsocksr/master/vless-config.json
+https://raw.githubusercontent.com/shadowsocksrr/shadowsocksr-nodejs/master/vless-config.json
+https://raw.githubusercontent.com/shadowsocksr/shadowsocksr/master/vless-config.json
+https://raw.githubusercontent.com/ssr-forever/ssr-server/master/vless-config.json
+https://raw.githubusercontent.com/ssr-forever/ssr-client/master/vless-config.json
+# ============================================================
+# ЗЕРКАЛА ИЗВЕСТНЫХ РЕПОЗИТОРИЕВ (для надёжности)
+# ============================================================
+https://gitlab.com/api/v4/projects/25845333/repository/files/README.md/raw
+https://gitlab.com/api/v4/projects/25845333/repository/files/subscriptions.txt/raw
+https://gitlab.com/api/v4/projects/25845333/repository/files/v2ray.txt/raw
+https://gitlab.com/api/v4/projects/25845333/repository/files/vless.txt/raw
+https://gitlab.com/api/v4/projects/25845333/repository/files/trojan.txt/raw
+https://gitlab.com/api/v4/projects/25845333/repository/files/hysteria2.txt/raw
+https://gitlab.com/api/v4/projects/25845333/repository/files/all.txt/raw
