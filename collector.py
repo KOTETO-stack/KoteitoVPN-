@@ -10,7 +10,7 @@ OUTPUT_FILE = "ready.txt"
 MAX_SERVERS = 150
 EXCLUDED_COUNTRIES = {"UA"}
 EXCLUDED_KEYWORDS = ["bns", "bnx"]
-ALLOWED_PROTOCOLS = {"vless", "trojan", "hy2", "vmess"}
+ALLOWED_PROTOCOLS = {"vless", "trojan"}
 PING_TIMEOUT = 5.0
 
 SNI_LIST = [
@@ -46,7 +46,7 @@ async def fetch_configs(session, url):
         async with session.get(url, timeout=15) as resp:
             if resp.status == 200:
                 text = await resp.text()
-                configs = re.findall(r'(vless://[^\s]+|trojan://[^\s]+|hy2://[^\s]+|vmess://[^\s]+)', text)
+                configs = re.findall(r'(vless://[^\s]+|trojan://[^\s]+)', text)
                 return configs
     except:
         return []
@@ -57,10 +57,6 @@ def parse_proxy_url(url):
         return parse_vless(url)
     elif url.startswith("trojan://"):
         return parse_trojan(url)
-    elif url.startswith("hy2://"):
-        return parse_hy2(url)
-    elif url.startswith("vmess://"):
-        return parse_vmess(url)
     else:
         return None, None, None, None, {}
 
@@ -102,41 +98,6 @@ def parse_trojan(url):
     query = {k: v[0] if v else "" for k, v in query.items()}
     return "trojan", secret, host, port, query
 
-def parse_hy2(url):
-    if '#' in url:
-        url = url.split('#')[0]
-    raw = url[5:]
-    if '?' in raw:
-        host_port, query_str = raw.split('?', 1)
-    else:
-        host_port, query_str = raw, ""
-    if ':' in host_port:
-        host, port = host_port.split(':', 1)
-    else:
-        host, port = host_port, None
-    query = parse_qs(query_str) if query_str else {}
-    query = {k: v[0] if v else "" for k, v in query.items()}
-    return "hy2", None, host, port, query
-
-def parse_vmess(url):
-    try:
-        import base64 as b64
-        import json
-        raw = url[8:]
-        decoded = b64.b64decode(raw).decode('utf-8')
-        data = json.loads(decoded)
-        host = data.get('add', '')
-        port = str(data.get('port', ''))
-        secret = data.get('id', '')
-        query = {
-            "security": data.get('scy', 'auto'),
-            "fp": "chrome",
-            "encryption": "none",
-        }
-        return "vmess", secret, host, port, query
-    except:
-        return None, None, None, None, {}
-
 def parse_location(host):
     country_map = {
         "ru": "Россия", "us": "США", "de": "Германия", "fr": "Франция",
@@ -166,7 +127,7 @@ def apply_protection(proto, secret, host, port, query):
                 query[key] = value
         if "sni" not in query:
             query["sni"] = sni
-    elif proto in ("trojan", "hy2", "vmess"):
+    elif proto == "trojan":
         for key, value in TLS_SETTINGS.items():
             if key not in query or not query[key]:
                 query[key] = value
@@ -179,15 +140,7 @@ def apply_protection(proto, secret, host, port, query):
     else:
         host_port = f"{host}:{port}"
     query_str = urlencode(query, safe="%")
-    if proto == "vless":
-        return f"vless://{secret}@{host_port}?{query_str}"
-    elif proto == "trojan":
-        return f"trojan://{secret}@{host_port}?{query_str}"
-    elif proto == "hy2":
-        return f"hy2://{host_port}?{query_str}"
-    elif proto == "vmess":
-        return f"vmess://{secret}@{host_port}?{query_str}"
-    return None
+    return f"{proto}://{secret}@{host_port}?{query_str}"
 
 async def tcp_ping(host, port, timeout=PING_TIMEOUT):
     try:
@@ -228,7 +181,6 @@ async def process_configs(configs, skip_ping=False):
             name = generate_name(host, country_name, country_code)
             protected_cfg = apply_protection(proto, secret, host, port, query)
             if protected_cfg:
-                # Добавляем название как фрагмент # и параметр remark для совместимости
                 encoded_name = quote(name, safe='')
                 final_url = f"{protected_cfg}&remark={encoded_name}#{encoded_name}"
                 valid.append(final_url)
