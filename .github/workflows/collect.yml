@@ -1,8 +1,12 @@
 name: Collect VPN configs
 
 on:
+  push:
+    paths:
+      - 'sources.txt'
+      - 'collector.py'
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: '0 * * * *'   # каждый час в 00 минут
   workflow_dispatch:
 
 permissions:
