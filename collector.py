@@ -1,9 +1,8 @@
 import asyncio
 import aiohttp
 import re
-import base64
 import random
-from urllib.parse import parse_qs, urlencode
+from urllib.parse import urlparse, parse_qs, urlencode, quote
 import emoji
 
 # ---------- НАСТРОЙКИ ----------
@@ -13,20 +12,29 @@ MAX_SERVERS = 150
 MAX_PING_MS = 500
 EXCLUDED_COUNTRIES = {"UA"}
 EXCLUDED_KEYWORDS = ["bns", "bnx"]
-ALLOWED_PROTOCOLS = {"hy2", "trojan"}
-PING_TIMEOUT = 5.0  # увеличен до 5 секунд
+ALLOWED_PROTOCOLS = {"vless"}   # теперь только VLESS
+PING_TIMEOUT = 5.0
 
+# Белый список SNI для Reality
 SNI_LIST = [
+    "cdn7-54.yahoo.com",
     "www.yandex.ru",
     "www.google.com",
     "www.microsoft.com",
     "www.apple.com",
     "www.amazon.com",
-    "www.wikipedia.org",
     "www.cloudflare.com",
 ]
 
-DNS_LIST = ["1.1.1.1", "8.8.8.8", "9.9.9.9"]
+# Параметры Reality
+REALITY_SETTINGS = {
+    "security": "reality",
+    "fp": "edge",
+    "type": "xhttp",
+    "mode": "auto",
+    "path": "/",
+    "encryption": "none",
+}
 # ------------------------------
 
 def load_sources():
@@ -38,43 +46,42 @@ async def fetch_configs(session, url):
         async with session.get(url, timeout=15) as resp:
             if resp.status == 200:
                 text = await resp.text()
-                configs = re.findall(r'(hy2://[^\s]+|trojan://[^\s]+)', text)
+                # Ищем vless:// ссылки
+                configs = re.findall(r'(vless://[^\s]+)', text)
                 return configs
     except:
         return []
     return []
 
-def parse_proxy_url(url):
-    match = re.match(r'^(hy2|trojan)://([^?#]+)(\?.*)?$', url)
-    if not match:
+def parse_vless_url(url):
+    """Парсит vless:// ссылку, возвращает (uuid, host, port, query_dict)"""
+    # Убираем фрагмент #, если есть
+    if '#' in url:
+        url = url.split('#')[0]
+    # Проверяем схему
+    if not url.startswith("vless://"):
         return None, None, None, {}
-    protocol = match.group(1)
-    host_part = match.group(2)
-    query_part = match.group(3) or ""
-    
-    if host_part.startswith('['):
-        bracket_end = host_part.find(']')
-        if bracket_end == -1:
-            return None, None, None, {}
-        host = host_part[1:bracket_end]
-        rest = host_part[bracket_end+1:]
-        if rest.startswith(':'):
-            port = rest[1:]
-        else:
-            port = None
+    # Убираем vless://
+    raw = url[8:]
+    # Разделяем на часть до @ (UUID) и после
+    if '@' not in raw:
+        return None, None, None, {}
+    uuid, rest = raw.split('@', 1)
+    # Разделяем хост:порт и параметры
+    if '?' in rest:
+        host_port, query_str = rest.split('?', 1)
     else:
-        if ':' in host_part:
-            host, port = host_part.split(':', 1)
-        else:
-            host = host_part
-            port = None
-    
-    query_dict = {}
-    if query_part:
-        query_dict = parse_qs(query_part[1:])
-        query_dict = {k: v[0] if v else "" for k, v in query_dict.items()}
-    
-    return protocol, host, port, query_dict
+        host_port, query_str = rest, ""
+    # Хост и порт
+    if ':' in host_port:
+        host, port = host_port.split(':', 1)
+    else:
+        host, port = host_port, None
+    # Парсим параметры
+    query_dict = parse_qs(query_str) if query_str else {}
+    # Преобразуем значения из списков в строки
+    query_dict = {k: v[0] if v else "" for k, v in query_dict.items()}
+    return uuid, host, port, query_dict
 
 def parse_location(host):
     country_map = {
@@ -97,39 +104,26 @@ def generate_name(host, country_name, country_code):
     flag = emoji.emojize(f":{country_code.lower()}:", language='alias') if country_code else "🏳️"
     return f"{country_name} {city} {flag}".strip()
 
-def apply_protection(protocol, host, port, query):
+def apply_reality_protection(uuid, host, port, query):
+    # Добавляем Reality-параметры
     sni = random.choice(SNI_LIST)
-    dns = random.choice(DNS_LIST)
-    
-    protection = {
-        "security": "tls",
-        "sni": sni,
-        "fp": "chrome",
-        "encryption": "none",
-        "dns": dns,
-    }
-    if protocol == "trojan":
-        protection["flow"] = "xtls-rprx-vision"
-    
-    for key, value in protection.items():
+    # Если в query уже есть pbk, оставляем его, иначе генерируем? В реальных конфигах pbk приходит с сервером, поэтому не трогаем.
+    # Добавляем только недостающие параметры
+    for key, value in REALITY_SETTINGS.items():
         if key not in query or not query[key]:
             query[key] = value
-    
+    # Если нет sni, ставим случайный
+    if "sni" not in query:
+        query["sni"] = sni
+    # Если нет pbk, то конфиг невалидный – пропускаем (но многие источники дают pbk)
+    # Пересобираем URL
     if port:
-        if ':' in host:
-            host_port = f"[{host}]:{port}"
-        else:
-            host_port = f"{host}:{port}"
+        host_port = f"{host}:{port}"
     else:
-        if ':' in host:
-            host_port = f"[{host}]"
-        else:
-            host_port = host
-    
+        host_port = host
     query_str = urlencode(query, safe="%")
-    return f"{protocol}://{host_port}?{query_str}"
+    return f"vless://{uuid}@{host_port}?{query_str}"
 
-# Проверка пинга через TCP-connect на реальный порт сервера
 async def tcp_ping(host, port, timeout=PING_TIMEOUT):
     try:
         if not port:
@@ -144,68 +138,61 @@ async def tcp_ping(host, port, timeout=PING_TIMEOUT):
     except:
         return False
 
-# Сбор с проверкой пинга
 async def process_with_ping(configs):
-    valid = []
+    valid = []  # список ссылок с фрагментом
     tasks_data = []
     for cfg in configs:
-        proto, host, port, query = parse_proxy_url(cfg)
-        if not proto or not host:
-            continue
-        if proto not in ALLOWED_PROTOCOLS:
+        uuid, host, port, query = parse_vless_url(cfg)
+        if not uuid or not host:
             continue
         if any(kw in cfg.lower() for kw in EXCLUDED_KEYWORDS):
             continue
         country_name, country_code = parse_location(host)
         if country_code in EXCLUDED_COUNTRIES:
             continue
-        tasks_data.append((cfg, proto, host, port, query, country_name, country_code))
+        tasks_data.append((cfg, uuid, host, port, query, country_name, country_code))
     
-    # Параллельная проверка пинга для всех
+    # Проверка пинга
     ping_tasks = [tcp_ping(host, port or 443) for (_, _, host, port, _, _, _) in tasks_data]
     ping_results = await asyncio.gather(*ping_tasks, return_exceptions=True)
     
-    for (cfg, proto, host, port, query, country_name, country_code), alive in zip(tasks_data, ping_results):
+    for (cfg, uuid, host, port, query, country_name, country_code), alive in zip(tasks_data, ping_results):
         if alive is True:
-            protected_cfg = apply_protection(proto, host, port, query)
+            protected_cfg = apply_reality_protection(uuid, host, port, query)
+            # Генерируем название и добавляем как фрагмент
             name = generate_name(host, country_name, country_code)
-            valid.append({"name": name, "url": protected_cfg})
+            # Кодируем название в URL-безопасный вид
+            encoded_name = quote(name, safe='')
+            final_url = f"{protected_cfg}#{encoded_name}"
+            valid.append(final_url)
             if len(valid) >= MAX_SERVERS:
                 break
-    
-    valid.sort(key=lambda x: x["name"])
     return valid
 
-# Сбор без пинга (fallback)
 def process_without_ping(configs):
     valid = []
     for cfg in configs:
-        proto, host, port, query = parse_proxy_url(cfg)
-        if not proto or not host:
-            continue
-        if proto not in ALLOWED_PROTOCOLS:
+        uuid, host, port, query = parse_vless_url(cfg)
+        if not uuid or not host:
             continue
         if any(kw in cfg.lower() for kw in EXCLUDED_KEYWORDS):
             continue
         country_name, country_code = parse_location(host)
         if country_code in EXCLUDED_COUNTRIES:
             continue
-        protected_cfg = apply_protection(proto, host, port, query)
+        protected_cfg = apply_reality_protection(uuid, host, port, query)
         name = generate_name(host, country_name, country_code)
-        valid.append({"name": name, "url": protected_cfg})
+        encoded_name = quote(name, safe='')
+        final_url = f"{protected_cfg}#{encoded_name}"
+        valid.append(final_url)
         if len(valid) >= MAX_SERVERS:
             break
-    valid.sort(key=lambda x: x["name"])
     return valid
 
-def save_subscription(valid):
-    lines = []
-    for item in valid:
-        lines.append(f"{item['name']} | {item['url']}")
-    content = "\n".join(lines)
-    encoded = base64.b64encode(content.encode()).decode()
+def save_subscription(urls):
+    content = "\n".join(urls)
     with open(OUTPUT_FILE, "w") as f:
-        f.write(encoded)
+        f.write(content)
 
 async def main():
     sources = load_sources()
@@ -218,17 +205,12 @@ async def main():
     for r in results:
         all_configs.extend(r)
     unique = list(set(all_configs))
-    print(f"Найдено {len(unique)} уникальных конфигов")
+    print(f"Найдено {len(unique)} уникальных vless-конфигов")
     
-    hy2_count = sum(1 for c in unique if c.startswith("hy2://"))
-    trojan_count = sum(1 for c in unique if c.startswith("trojan://"))
-    print(f"  - hy2: {hy2_count}, trojan: {trojan_count}")
-    
-    # Пробуем с пингом
     print("🔄 Проверяем пинг (таймаут 5 сек)...")
     valid = await process_with_ping(unique)
     
-    if len(valid) == 0:
+    if not valid:
         print("⚠️ Ни один сервер не прошёл пинг. Переключаемся в режим БЕЗ пинга.")
         valid = process_without_ping(unique)
         print(f"✅ Собрано {len(valid)} серверов (без проверки пинга)")
@@ -236,7 +218,7 @@ async def main():
         print(f"✅ Отобрано {len(valid)} серверов с пингом < {MAX_PING_MS} мс")
     
     save_subscription(valid)
-    print(f"✅ Готово! Результат в {OUTPUT_FILE} (Base64)")
+    print(f"✅ Готово! Результат в {OUTPUT_FILE} (vless:// ссылки с фрагментами)")
 
 if __name__ == "__main__":
     asyncio.run(main())
