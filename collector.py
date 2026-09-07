@@ -2,8 +2,7 @@ import asyncio
 import aiohttp
 import re
 import random
-import base64
-from urllib.parse import parse_qs, urlencode
+from urllib.parse import parse_qs, urlencode, quote
 import emoji
 
 SOURCES_FILE = "sources.txt"
@@ -229,16 +228,18 @@ async def process_configs(configs, skip_ping=False):
             name = generate_name(host, country_name, country_code)
             protected_cfg = apply_protection(proto, secret, host, port, query)
             if protected_cfg:
-                valid.append(f"{name} | {protected_cfg}")
+                # Добавляем название как фрагмент # и параметр remark для совместимости
+                encoded_name = quote(name, safe='')
+                final_url = f"{protected_cfg}&remark={encoded_name}#{encoded_name}"
+                valid.append(final_url)
             if len(valid) >= MAX_SERVERS:
                 break
     return valid
 
 def save_subscription(valid):
     content = "\n".join(valid)
-    encoded = base64.b64encode(content.encode()).decode()
     with open(OUTPUT_FILE, "w") as f:
-        f.write(encoded)
+        f.write(content)
 
 async def main():
     sources = load_sources()
@@ -260,7 +261,7 @@ async def main():
     else:
         print(f"✅ Отобрано {len(valid)} серверов с пингом < 500 мс")
     save_subscription(valid)
-    print(f"✅ Готово! Результат в {OUTPUT_FILE} (Base64 с названиями)")
+    print(f"✅ Готово! Результат в {OUTPUT_FILE} (ссылки с # и remark)")
 
 if __name__ == "__main__":
     asyncio.run(main())
