@@ -2,16 +2,16 @@ import asyncio
 import aiohttp
 import re
 import random
-from urllib.parse import parse_qs, urlencode, quote
+import base64
+from urllib.parse import parse_qs, urlencode
 import emoji
 
 SOURCES_FILE = "sources.txt"
 OUTPUT_FILE = "ready.txt"
 MAX_SERVERS = 150
-MAX_PING_MS = 500
 EXCLUDED_COUNTRIES = {"UA"}
 EXCLUDED_KEYWORDS = ["bns", "bnx"]
-ALLOWED_PROTOCOLS = {"vless", "trojan"}  # только эти два, они наиболее стабильны
+ALLOWED_PROTOCOLS = {"vless", "trojan", "hy2", "vmess"}
 PING_TIMEOUT = 5.0
 
 SNI_LIST = [
@@ -24,7 +24,6 @@ SNI_LIST = [
     "www.cloudflare.com",
 ]
 
-# Настройки для vless (Reality)
 REALITY_SETTINGS = {
     "security": "reality",
     "fp": "edge",
@@ -33,8 +32,6 @@ REALITY_SETTINGS = {
     "path": "/",
     "encryption": "none",
 }
-
-# Настройки для trojan (TLS)
 TLS_SETTINGS = {
     "security": "tls",
     "fp": "chrome",
@@ -50,26 +47,28 @@ async def fetch_configs(session, url):
         async with session.get(url, timeout=15) as resp:
             if resp.status == 200:
                 text = await resp.text()
-                # Ищем vless и trojan
-                configs = re.findall(r'(vless://[^\s]+|trojan://[^\s]+)', text)
+                configs = re.findall(r'(vless://[^\s]+|trojan://[^\s]+|hy2://[^\s]+|vmess://[^\s]+)', text)
                 return configs
     except:
         return []
     return []
 
 def parse_proxy_url(url):
-    """Универсальный парсер для vless и trojan, всегда возвращает 5 значений"""
     if url.startswith("vless://"):
         return parse_vless(url)
     elif url.startswith("trojan://"):
         return parse_trojan(url)
+    elif url.startswith("hy2://"):
+        return parse_hy2(url)
+    elif url.startswith("vmess://"):
+        return parse_vmess(url)
     else:
         return None, None, None, None, {}
 
 def parse_vless(url):
     if '#' in url:
         url = url.split('#')[0]
-    raw = url[8:]  # убираем vless://
+    raw = url[8:]
     if '@' not in raw:
         return None, None, None, None, {}
     secret, rest = raw.split('@', 1)
@@ -88,7 +87,7 @@ def parse_vless(url):
 def parse_trojan(url):
     if '#' in url:
         url = url.split('#')[0]
-    raw = url[9:]  # убираем trojan://
+    raw = url[9:]
     if '@' not in raw:
         return None, None, None, None, {}
     secret, rest = raw.split('@', 1)
@@ -103,6 +102,41 @@ def parse_trojan(url):
     query = parse_qs(query_str) if query_str else {}
     query = {k: v[0] if v else "" for k, v in query.items()}
     return "trojan", secret, host, port, query
+
+def parse_hy2(url):
+    if '#' in url:
+        url = url.split('#')[0]
+    raw = url[5:]
+    if '?' in raw:
+        host_port, query_str = raw.split('?', 1)
+    else:
+        host_port, query_str = raw, ""
+    if ':' in host_port:
+        host, port = host_port.split(':', 1)
+    else:
+        host, port = host_port, None
+    query = parse_qs(query_str) if query_str else {}
+    query = {k: v[0] if v else "" for k, v in query.items()}
+    return "hy2", None, host, port, query
+
+def parse_vmess(url):
+    try:
+        import base64 as b64
+        import json
+        raw = url[8:]
+        decoded = b64.b64decode(raw).decode('utf-8')
+        data = json.loads(decoded)
+        host = data.get('add', '')
+        port = str(data.get('port', ''))
+        secret = data.get('id', '')
+        query = {
+            "security": data.get('scy', 'auto'),
+            "fp": "chrome",
+            "encryption": "none",
+        }
+        return "vmess", secret, host, port, query
+    except:
+        return None, None, None, None, {}
 
 def parse_location(host):
     country_map = {
@@ -133,13 +167,12 @@ def apply_protection(proto, secret, host, port, query):
                 query[key] = value
         if "sni" not in query:
             query["sni"] = sni
-    elif proto == "trojan":
+    elif proto in ("trojan", "hy2", "vmess"):
         for key, value in TLS_SETTINGS.items():
             if key not in query or not query[key]:
                 query[key] = value
         if "sni" not in query:
             query["sni"] = sni
-    # Если порт не указан, ставим 443
     if not port:
         port = "443"
     if ':' in host:
@@ -147,7 +180,15 @@ def apply_protection(proto, secret, host, port, query):
     else:
         host_port = f"{host}:{port}"
     query_str = urlencode(query, safe="%")
-    return f"{proto}://{secret}@{host_port}?{query_str}"
+    if proto == "vless":
+        return f"vless://{secret}@{host_port}?{query_str}"
+    elif proto == "trojan":
+        return f"trojan://{secret}@{host_port}?{query_str}"
+    elif proto == "hy2":
+        return f"hy2://{host_port}?{query_str}"
+    elif proto == "vmess":
+        return f"vmess://{secret}@{host_port}?{query_str}"
+    return None
 
 async def tcp_ping(host, port, timeout=PING_TIMEOUT):
     try:
@@ -175,30 +216,29 @@ async def process_configs(configs, skip_ping=False):
         country_name, country_code = parse_location(host)
         if country_code in EXCLUDED_COUNTRIES:
             continue
-        tasks_data.append((cfg, proto, secret, host, port, query, country_name, country_code))
+        tasks_data.append((proto, secret, host, port, query, country_name, country_code))
     if not tasks_data:
         return []
-    # Проверка пинга (если не skip_ping)
     if not skip_ping:
-        ping_tasks = [tcp_ping(host, port or 443) for (_, _, _, host, port, _, _, _) in tasks_data]
+        ping_tasks = [tcp_ping(host, port or 443) for (_, _, host, port, _, _, _) in tasks_data]
         ping_results = await asyncio.gather(*ping_tasks, return_exceptions=True)
     else:
         ping_results = [True] * len(tasks_data)
-    for (cfg, proto, secret, host, port, query, country_name, country_code), alive in zip(tasks_data, ping_results):
+    for (proto, secret, host, port, query, country_name, country_code), alive in zip(tasks_data, ping_results):
         if alive is True:
             name = generate_name(host, country_name, country_code)
             protected_cfg = apply_protection(proto, secret, host, port, query)
-            encoded_name = quote(name, safe='')
-            final_url = f"{protected_cfg}#{encoded_name}"
-            valid.append(final_url)
+            if protected_cfg:
+                valid.append(f"{name} | {protected_cfg}")
             if len(valid) >= MAX_SERVERS:
                 break
     return valid
 
-def save_subscription(urls):
-    content = "\n".join(urls)
+def save_subscription(valid):
+    content = "\n".join(valid)
+    encoded = base64.b64encode(content.encode()).decode()
     with open(OUTPUT_FILE, "w") as f:
-        f.write(content)
+        f.write(encoded)
 
 async def main():
     sources = load_sources()
@@ -218,9 +258,9 @@ async def main():
         valid = await process_configs(unique, skip_ping=True)
         print(f"✅ Собрано {len(valid)} серверов (без проверки пинга)")
     else:
-        print(f"✅ Отобрано {len(valid)} серверов с пингом < {MAX_PING_MS} мс")
+        print(f"✅ Отобрано {len(valid)} серверов с пингом < 500 мс")
     save_subscription(valid)
-    print(f"✅ Готово! Результат в {OUTPUT_FILE} (vless/trojan с #)")
+    print(f"✅ Готово! Результат в {OUTPUT_FILE} (Base64 с названиями)")
 
 if __name__ == "__main__":
     asyncio.run(main())
