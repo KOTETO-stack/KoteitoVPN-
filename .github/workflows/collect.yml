@@ -32,3 +32,5 @@ jobs:
           git add ready.txt
           git commit -m "Update subscription" || echo "No changes"
           git push
+
+хуй 
