@@ -26,4 +26,5 @@ jobs:
           git config --local user.name "GitHub Action"
           git add verified_servers.json
           git commit -m "Update verified servers $(date +'%Y-%m-%d %H:%M')" || exit 0
+          git pull --rebase origin main
           git push
