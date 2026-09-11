@@ -1,0 +1,28 @@
+name: 2. Generate VPN Subscription
+on:
+  schedule:
+    - cron: '10 */6 * * *' # Запуск через 10 минут после сборщика
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install geoip2 requests
+      - name: Download GeoLite2
+        run: |
+          wget -O GeoLite2-City.tar.gz "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=${{ secrets.MAXMIND_LICENSE }}&suffix=tar.gz"
+          tar -xzf GeoLite2-City.tar.gz
+          mv GeoLite2-City_*/GeoLite2-City.mmdb .
+      - run: python generator.py
+      - name: Commit and push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add subscription.json
+          git commit -m "Update subscription $(date +'%Y-%m-%d %H:%M')" || exit 0
+          git push
