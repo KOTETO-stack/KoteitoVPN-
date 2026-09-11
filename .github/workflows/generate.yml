@@ -29,4 +29,5 @@ jobs:
           git config --local user.name "GitHub Action"
           git add subscription.json
           git commit -m "Update subscription $(date +'%Y-%m-%d %H:%M')" || exit 0
+          git pull --rebase origin main
           git push
