@@ -50,246 +50,6 @@
   "outbounds": [
     {
       "type": "trojan",
-      "tag": "США None 🇺🇸",
-      "server": "216.24.57.250",
-      "server_port": 443,
-      "password": "5027e2a4-c4d2-463a-9508-83a2c7d1ad83",
-      "tls": {
-        "enabled": true,
-        "server_name": "afrcloud1.mmv.kr",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "США None 🇺🇸",
-      "server": "151.101.56.7",
-      "server_port": 443,
-      "password": "MiTiVPN",
-      "tls": {
-        "enabled": true,
-        "server_name": "ssl.fastly.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "США None 🇺🇸",
-      "server": "199.232.206.245",
-      "server_port": 443,
-      "password": "7b12dfabbe374661a12d11d698d86fbd",
-      "tls": {
-        "enabled": true,
-        "server_name": "ssl.fastly.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "США None 🇺🇸",
-      "server": "100.42.228.109",
-      "server_port": 443,
-      "password": "BxceQaOe",
-      "tls": {
-        "enabled": true,
-        "server_name": "t.me%2Fripaojiedian",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "None None 🏳️",
-      "server": "104.16.71.213",
-      "server_port": 443,
-      "password": "MiTiVPN",
-      "tls": {
-        "enabled": true,
-        "server_name": "104.16.71.213",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "None None 🏳️",
-      "server": "104.16.72.41",
-      "server_port": 443,
-      "password": "MiTiVPN",
-      "tls": {
-        "enabled": true,
-        "server_name": "sw.App-Cloud.ir",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "США None 🇺🇸",
-      "server": "151.101.56.6",
-      "server_port": 443,
-      "password": "MiTiVPN",
-      "tls": {
-        "enabled": true,
-        "server_name": "ssl.fastly.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "США None 🇺🇸",
-      "server": "151.101.56.6",
-      "server_port": 443,
-      "password": "MiTiVPN",
-      "tls": {
-        "enabled": true,
-        "server_name": "ssl.fastly.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "США None 🇺🇸",
-      "server": "151.101.56.7",
-      "server_port": 443,
-      "password": "MiTiVPN",
-      "tls": {
-        "enabled": true,
-        "server_name": "ssl.fastly.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "США Fremont 🇺🇸",
-      "server": "95.182.101.74",
-      "server_port": 2053,
-      "password": "8r%3C%5B9%27l6hAO%238ZQi",
-      "tls": {
-        "enabled": true,
-        "server_name": "Koma-YT.PAGeS.Dev",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "США Fremont 🇺🇸",
-      "server": "31.58.50.143",
-      "server_port": 8443,
-      "password": "8r%3C%5B9%27l6hAO%238ZQi",
-      "tls": {
-        "enabled": true,
-        "server_name": "Koma-YT.PAGeS.Dev",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "США Los Angeles 🇺🇸",
-      "server": "172.245.93.26",
-      "server_port": 8443,
-      "password": "8r%3C%5B9%27l6hAO%238ZQi",
-      "tls": {
-        "enabled": true,
-        "server_name": "Koma-YT.PAGeS.Dev",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "США None 🇺🇸",
-      "server": "216.24.57.250",
-      "server_port": 443,
-      "password": "5027e2a4-c4d2-463a-9508-83a2c7d1ad83",
-      "tls": {
-        "enabled": true,
-        "server_name": "afrcloud1.mmv.kr",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "США Fremont 🇺🇸",
-      "server": "95.182.101.74",
-      "server_port": 2053,
-      "password": "8r%3C%5B9%27l6hAO%238ZQi",
-      "tls": {
-        "enabled": true,
-        "server_name": "Koma-YT.PAGeS.Dev",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "США Fremont 🇺🇸",
-      "server": "31.58.50.143",
-      "server_port": 8443,
-      "password": "8r%3C%5B9%27l6hAO%238ZQi",
-      "tls": {
-        "enabled": true,
-        "server_name": "Koma-YT.PAGeS.Dev",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "США Los Angeles 🇺🇸",
-      "server": "172.245.93.26",
-      "server_port": 8443,
-      "password": "8r%3C%5B9%27l6hAO%238ZQi",
-      "tls": {
-        "enabled": true,
-        "server_name": "Koma-YT.PAGeS.Dev",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
       "tag": "None None 🏳️",
       "server": "8.47.69.0",
       "server_port": 443,
@@ -306,7 +66,7 @@
     {
       "type": "trojan",
       "tag": "None None 🏳️",
-      "server": "104.18.12.149",
+      "server": "8.6.112.0",
       "server_port": 443,
       "password": "humanity",
       "tls": {
@@ -321,7 +81,22 @@
     {
       "type": "trojan",
       "tag": "None None 🏳️",
-      "server": "172.67.221.242",
+      "server": "104.19.229.21",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.calmlunch.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "104.18.12.149",
       "server_port": 443,
       "password": "humanity",
       "tls": {
@@ -366,6 +141,21 @@
     {
       "type": "trojan",
       "tag": "None None 🏳️",
+      "server": "104.16.174.101",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.ignitelimit.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
       "server": "104.16.174.22",
       "server_port": 443,
       "password": "humanity",
@@ -381,7 +171,7 @@
     {
       "type": "trojan",
       "tag": "None None 🏳️",
-      "server": "8.6.112.0",
+      "server": "104.16.174.37",
       "server_port": 443,
       "password": "humanity",
       "tls": {
@@ -410,38 +200,8 @@
     },
     {
       "type": "trojan",
-      "tag": "Croatia Zagreb 🏳️",
-      "server": "213.182.199.137",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.pleadcourt.org",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
       "tag": "None None 🏳️",
-      "server": "188.114.98.0",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.calmlunch.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "None None 🏳️",
-      "server": "188.114.97.7",
+      "server": "104.20.6.134",
       "server_port": 443,
       "password": "humanity",
       "tls": {
@@ -455,8 +215,23 @@
     },
     {
       "type": "trojan",
+      "tag": "США Dallas 🇺🇸",
+      "server": "64.94.95.117",
+      "server_port": 57142,
+      "password": "kkzh2prsyr2ik47as615",
+      "tls": {
+        "enabled": true,
+        "server_name": "static.rutube.ru",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
       "tag": "None None 🏳️",
-      "server": "104.16.174.36",
+      "server": "172.67.221.242",
       "server_port": 443,
       "password": "humanity",
       "tls": {
@@ -470,28 +245,13 @@
     },
     {
       "type": "trojan",
-      "tag": "США Chicago 🇺🇸",
-      "server": "199.232.78.160",
-      "server_port": 443,
-      "password": "MiTiVPN",
-      "tls": {
-        "enabled": true,
-        "server_name": "ssl.fastly.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
       "tag": "США None 🇺🇸",
-      "server": "151.101.56.7",
+      "server": "216.24.57.250",
       "server_port": 443,
-      "password": "MiTiVPN",
+      "password": "5027e2a4-c4d2-463a-9508-83a2c7d1ad83",
       "tls": {
         "enabled": true,
-        "server_name": "ssl.fastly.com",
+        "server_name": "afrcloud1.mmv.kr",
         "utls": {
           "enabled": true,
           "fingerprint": "chrome"
@@ -500,84 +260,9 @@
     },
     {
       "type": "trojan",
-      "tag": "США None 🇺🇸",
-      "server": "151.101.56.6",
-      "server_port": 443,
-      "password": "MiTiVPN",
-      "tls": {
-        "enabled": true,
-        "server_name": "ssl.fastly.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "Luxembourg None 🏳️",
-      "server": "188.42.145.180",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.volumeroot.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "США None 🇺🇸",
-      "server": "151.101.56.7",
-      "server_port": 443,
-      "password": "MiTiVPN",
-      "tls": {
-        "enabled": true,
-        "server_name": "ssl.fastly.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "США Chicago 🇺🇸",
-      "server": "199.232.78.160",
-      "server_port": 443,
-      "password": "MiTiVPN",
-      "tls": {
-        "enabled": true,
-        "server_name": "ssl.fastly.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "США None 🇺🇸",
-      "server": "151.101.56.7",
-      "server_port": 443,
-      "password": "MiTiVPN",
-      "tls": {
-        "enabled": true,
-        "server_name": "ssl.fastly.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "None None 🏳️",
-      "server": "104.19.229.21",
-      "server_port": 443,
+      "tag": "США Dallas 🇺🇸",
+      "server": "193.233.87.41",
+      "server_port": 8443,
       "password": "humanity",
       "tls": {
         "enabled": true,
@@ -605,103 +290,13 @@
     },
     {
       "type": "trojan",
-      "tag": "США None 🇺🇸",
-      "server": "151.101.56.6",
-      "server_port": 443,
-      "password": "MiTiVPN",
-      "tls": {
-        "enabled": true,
-        "server_name": "ssl.fastly.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
       "tag": "США Chicago 🇺🇸",
-      "server": "199.232.78.160",
+      "server": "23.227.193.173",
       "server_port": 443,
-      "password": "MiTiVPN",
+      "password": "AZWY=WAZk5TeVYmMUudr2xmeb00I3ymeMQ",
       "tls": {
         "enabled": true,
-        "server_name": "ssl.fastly.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "США Chicago 🇺🇸",
-      "server": "199.232.78.160",
-      "server_port": 443,
-      "password": "mitivpn",
-      "tls": {
-        "enabled": true,
-        "server_name": "ssl.fastly.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "США Chicago 🇺🇸",
-      "server": "199.232.78.160",
-      "server_port": 443,
-      "password": "MiTiVPN",
-      "tls": {
-        "enabled": true,
-        "server_name": "ssl.fastly.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "США None 🇺🇸",
-      "server": "151.101.56.7",
-      "server_port": 443,
-      "password": "MiTiVPN",
-      "tls": {
-        "enabled": true,
-        "server_name": "ssl.fastly.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "США None 🇺🇸",
-      "server": "199.232.206.245",
-      "server_port": 443,
-      "password": "7b12dfabbe374661a12d11d698d86fbd",
-      "tls": {
-        "enabled": true,
-        "server_name": "ssl.fastly.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "США None 🇺🇸",
-      "server": "100.42.228.109",
-      "server_port": 443,
-      "password": "BxceQaOe",
-      "tls": {
-        "enabled": true,
-        "server_name": "t.me%2Fripaojiedian",
+        "server_name": "23.227.193.173",
         "utls": {
           "enabled": true,
           "fingerprint": "chrome"
@@ -770,148 +365,43 @@
     },
     {
       "type": "trojan",
-      "tag": "None None 🏳️",
-      "server": "104.21.12.87",
-      "server_port": 443,
-      "password": "0b65bb06-6b28-487a-8e3c-820dda51e977",
-      "tls": {
-        "enabled": true,
-        "server_name": "series-v1.samanehha.co",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "None None 🏳️",
-      "server": "104.19.229.21",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.calmlunch.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "None None 🏳️",
-      "server": "104.16.174.101",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.ignitelimit.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "None None 🏳️",
-      "server": "104.16.174.37",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.ignitelimit.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "None None 🏳️",
-      "server": "104.20.6.134",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.ignitelimit.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "None None 🏳️",
-      "server": "104.18.152.175",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.ignitelimit.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "None None 🏳️",
-      "server": "104.21.79.246",
-      "server_port": 443,
-      "password": "e35026da-e985-49ca-b43b-276062a535a6",
-      "tls": {
-        "enabled": true,
-        "server_name": "notdirect.howhealthyistoomajreally.homes",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "Австрия Vienna 🇦🇹",
-      "server": "212.183.88.136",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.calmlunch.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "Seychelles None 🏳️",
-      "server": "45.130.125.158",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.ignitelimit.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "None None 🏳️",
-      "server": "104.16.71.213",
+      "tag": "США None 🇺🇸",
+      "server": "151.101.56.7",
       "server_port": 443,
       "password": "MiTiVPN",
       "tls": {
         "enabled": true,
-        "server_name": "104.16.71.213",
+        "server_name": "ssl.fastly.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "Канада Toronto 🇨🇦",
+      "server": "172.105.5.158",
+      "server_port": 443,
+      "password": "027c71ac-026b-4755-9a33-26558ce6f6a2",
+      "tls": {
+        "enabled": true,
+        "server_name": "ddragon.leagueoflegends.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "США None 🇺🇸",
+      "server": "216.24.57.250",
+      "server_port": 443,
+      "password": "5027e2a4-c4d2-463a-9508-83a2c7d1ad83",
+      "tls": {
+        "enabled": true,
+        "server_name": "afrcloud1.mmv.kr",
         "utls": {
           "enabled": true,
           "fingerprint": "chrome"
@@ -935,51 +425,6 @@
     },
     {
       "type": "trojan",
-      "tag": "None None 🏳️",
-      "server": "104.18.152.133",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.ignitelimit.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "None None 🏳️",
-      "server": "172.67.204.22",
-      "server_port": 443,
-      "password": "4d04b30c-ef7b-4a07-8f9e-f581ec171f8a",
-      "tls": {
-        "enabled": true,
-        "server_name": "US7-08.890602.xyZ",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "None None 🏳️",
-      "server": "172.67.200.238",
-      "server_port": 443,
-      "password": "2fec7227-9abe-46f2-af18-78302b836c45",
-      "tls": {
-        "enabled": true,
-        "server_name": "3s.890689.xyz",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
       "tag": "Luxembourg None 🏳️",
       "server": "188.42.145.180",
       "server_port": 443,
@@ -1017,126 +462,6 @@
       "tls": {
         "enabled": true,
         "server_name": "www.volumeroot.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "Luxembourg None 🏳️",
-      "server": "188.42.145.180",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.volumeroot.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "Luxembourg None 🏳️",
-      "server": "188.42.145.180",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.volumeroot.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "Luxembourg None 🏳️",
-      "server": "188.42.145.180",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.volumeroot.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "Luxembourg None 🏳️",
-      "server": "188.42.145.180",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.volumeroot.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "Luxembourg None 🏳️",
-      "server": "188.42.145.180",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.volumeroot.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "Luxembourg None 🏳️",
-      "server": "188.42.145.180",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.volumeroot.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "Luxembourg None 🏳️",
-      "server": "188.42.145.180",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.volumeroot.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "США None 🇺🇸",
-      "server": "198.202.211.1",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.creationlong.org",
         "utls": {
           "enabled": true,
           "fingerprint": "chrome"
@@ -1160,21 +485,6 @@
     },
     {
       "type": "trojan",
-      "tag": "New Zealand None 🏳️",
-      "server": "202.37.33.80",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.creationlong.org",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
       "tag": "Австрия Vienna 🇦🇹",
       "server": "212.183.88.136",
       "server_port": 443,
@@ -1220,21 +530,6 @@
     },
     {
       "type": "trojan",
-      "tag": "Австрия Vienna 🇦🇹",
-      "server": "212.183.88.136",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.calmlunch.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
       "tag": "Croatia Zagreb 🏳️",
       "server": "213.182.199.137",
       "server_port": 443,
@@ -1362,126 +657,6 @@
       "tls": {
         "enabled": true,
         "server_name": "www.pleadcourt.org",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "Croatia Zagreb 🏳️",
-      "server": "213.182.199.137",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.pleadcourt.org",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "Croatia Zagreb 🏳️",
-      "server": "213.182.199.137",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.pleadcourt.org",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "Croatia Zagreb 🏳️",
-      "server": "213.182.199.137",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.pleadcourt.org",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "Croatia Zagreb 🏳️",
-      "server": "213.182.199.137",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.pleadcourt.org",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "Croatia Zagreb 🏳️",
-      "server": "213.182.199.137",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.pleadcourt.org",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "Croatia Zagreb 🏳️",
-      "server": "213.182.199.137",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.pleadcourt.org",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "Croatia Zagreb 🏳️",
-      "server": "213.182.199.137",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.pleadcourt.org",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "США None 🇺🇸",
-      "server": "216.24.57.7",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.ignitelimit.com",
         "utls": {
           "enabled": true,
           "fingerprint": "chrome"
@@ -1595,21 +770,6 @@
     },
     {
       "type": "trojan",
-      "tag": "Seychelles None 🏳️",
-      "server": "45.205.0.6",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.calmlunch.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
       "tag": "None None 🏳️",
       "server": "8.47.69.0",
       "server_port": 443,
@@ -1767,246 +927,6 @@
       "tls": {
         "enabled": true,
         "server_name": "www.pleadcourt.org",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "None None 🏳️",
-      "server": "8.47.69.0",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.pleadcourt.org",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "None None 🏳️",
-      "server": "8.47.69.0",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.pleadcourt.org",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "None None 🏳️",
-      "server": "8.47.69.0",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.pleadcourt.org",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "None None 🏳️",
-      "server": "8.47.69.0",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.pleadcourt.org",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "None None 🏳️",
-      "server": "8.47.69.0",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.pleadcourt.org",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "None None 🏳️",
-      "server": "8.47.69.0",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.pleadcourt.org",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "None None 🏳️",
-      "server": "8.47.69.0",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.pleadcourt.org",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "США Los Angeles 🇺🇸",
-      "server": "14.1.28.76",
-      "server_port": 50740,
-      "password": "r49gssuondznyu2eex83",
-      "tls": {
-        "enabled": true,
-        "server_name": "14.1.28.76",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "None None 🏳️",
-      "server": "188.114.97.6",
-      "server_port": 443,
-      "password": "mitivpn",
-      "tls": {
-        "enabled": true,
-        "server_name": "sadszdx.global.ssl.fastly.net.b5r.ir",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "None None 🏳️",
-      "server": "8.47.69.0",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.pleadcourt.org",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "None None 🏳️",
-      "server": "8.47.69.0",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.pleadcourt.org",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "None None 🏳️",
-      "server": "8.47.69.0",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.pleadcourt.org",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "None None 🏳️",
-      "server": "8.47.69.0",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.pleadcourt.org",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "Германия None 🇩🇪",
-      "server": "45.80.111.7",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.calmlunch.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "Германия None 🇩🇪",
-      "server": "45.80.111.7",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.calmlunch.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "Seychelles None 🏳️",
-      "server": "45.205.0.6",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.calmlunch.com",
         "utls": {
           "enabled": true,
           "fingerprint": "chrome"
@@ -2022,36 +942,6 @@
       "tls": {
         "enabled": true,
         "server_name": "www.calmloud.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "Seychelles None 🏳️",
-      "server": "45.130.125.32",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.calmloud.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "chrome"
-        }
-      }
-    },
-    {
-      "type": "trojan",
-      "tag": "Seychelles None 🏳️",
-      "server": "45.130.125.160",
-      "server_port": 443,
-      "password": "humanity",
-      "tls": {
-        "enabled": true,
-        "server_name": "www.calmlunch.com",
         "utls": {
           "enabled": true,
           "fingerprint": "chrome"
@@ -2210,6 +1100,21 @@
     },
     {
       "type": "trojan",
+      "tag": "Croatia Zagreb 🏳️",
+      "server": "213.182.199.137",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.pleadcourt.org",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
       "tag": "New Zealand None 🏳️",
       "server": "202.37.33.80",
       "server_port": 443,
@@ -2286,12 +1191,1107 @@
     {
       "type": "trojan",
       "tag": "None None 🏳️",
-      "server": "188.114.97.7",
+      "server": "188.114.96.3",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.calmlunch.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "Швейцария None 🇨🇭",
+      "server": "185.18.250.252",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.multiplydose.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "Швейцария None 🇨🇭",
+      "server": "185.18.250.252",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.calmlunch.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "Швейцария None 🇨🇭",
+      "server": "185.18.250.245",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.calmlunch.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "172.67.149.60",
       "server_port": 443,
       "password": "humanity",
       "tls": {
         "enabled": true,
         "server_name": "www.ignitelimit.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "172.66.47.69",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.creationlong.org",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "США None 🇺🇸",
+      "server": "165.215.250.14",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.ignitelimit.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "США None 🇺🇸",
+      "server": "165.215.250.14",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.ignitelimit.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "США None 🇺🇸",
+      "server": "165.215.250.14",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.calmlunch.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "США None 🇺🇸",
+      "server": "165.215.250.14",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.calmlunch.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "США None 🇺🇸",
+      "server": "165.215.250.14",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.ignitelimit.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "162.159.38.119",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.creationlong.org",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "162.159.38.119",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.calmloud.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "162.159.38.119",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.creationlong.org",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "США None 🇺🇸",
+      "server": "141.193.213.21",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.calmloud.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "141.101.90.101",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.ignitelimit.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "141.101.90.101",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.ignitelimit.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "США None 🇺🇸",
+      "server": "130.250.137.171",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.ignitelimit.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "США None 🇺🇸",
+      "server": "130.250.137.171",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.ignitelimit.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "104.26.6.159",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.creationlong.org",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "104.19.64.105",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.calmlunch.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "104.19.229.21",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.ignitelimit.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "104.19.229.21",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.ignitelimit.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "104.19.229.21",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.calmlunch.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "104.19.229.21",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.calmloud.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "8.47.69.0",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.pleadcourt.org",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "8.47.69.0",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.pleadcourt.org",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "8.47.69.0",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.pleadcourt.org",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "Croatia Zagreb 🏳️",
+      "server": "213.182.199.137",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.pleadcourt.org",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "Австрия Vienna 🇦🇹",
+      "server": "212.183.88.136",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.calmlunch.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "Luxembourg None 🏳️",
+      "server": "188.42.145.180",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.volumeroot.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "Luxembourg None 🏳️",
+      "server": "188.42.145.180",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.volumeroot.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "172.67.149.60",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.ignitelimit.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "104.18.152.97",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.ignitelimit.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "104.18.152.229",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.ignitelimit.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "104.17.111.1",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.ignitelimit.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "104.16.174.36",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.ignitelimit.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "104.16.174.12",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.ignitelimit.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "США Chicago 🇺🇸",
+      "server": "199.232.78.160",
+      "server_port": 443,
+      "password": "MiTiVPN",
+      "tls": {
+        "enabled": true,
+        "server_name": "ssl.fastly.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "США None 🇺🇸",
+      "server": "151.101.56.7",
+      "server_port": 443,
+      "password": "MiTiVPN",
+      "tls": {
+        "enabled": true,
+        "server_name": "ssl.fastly.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "США None 🇺🇸",
+      "server": "151.101.56.6",
+      "server_port": 443,
+      "password": "MiTiVPN",
+      "tls": {
+        "enabled": true,
+        "server_name": "ssl.fastly.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "8.47.69.0",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "8.47.69.0",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "Luxembourg None 🏳️",
+      "server": "188.42.145.180",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "188.42.145.180",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "104.21.70.21",
+      "server_port": 443,
+      "password": "018b8e7b-7813-4dcb-84a5-3c98f1521e00",
+      "tls": {
+        "enabled": true,
+        "server_name": "id1.nathaya.web.id",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "162.159.38.119",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "162.159.38.119",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "США None 🇺🇸",
+      "server": "151.101.56.7",
+      "server_port": 443,
+      "password": "MiTiVPN",
+      "tls": {
+        "enabled": true,
+        "server_name": "ssl.fastly.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "США None 🇺🇸",
+      "server": "130.250.137.171",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.ignitelimit.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "США Chicago 🇺🇸",
+      "server": "199.232.78.160",
+      "server_port": 443,
+      "password": "MiTiVPN",
+      "tls": {
+        "enabled": true,
+        "server_name": "ssl.fastly.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "США None 🇺🇸",
+      "server": "151.101.56.7",
+      "server_port": 443,
+      "password": "MiTiVPN",
+      "tls": {
+        "enabled": true,
+        "server_name": "ssl.fastly.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "8.47.69.0",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.pleadcourt.org",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "104.19.229.21",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.calmlunch.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "188.114.96.3",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "188.114.96.3",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "США None 🇺🇸",
+      "server": "151.101.56.6",
+      "server_port": 443,
+      "password": "MiTiVPN",
+      "tls": {
+        "enabled": true,
+        "server_name": "ssl.fastly.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "8.47.69.0",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.pleadcourt.org",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "США None 🇺🇸",
+      "server": "151.101.56.6",
+      "server_port": 443,
+      "password": "MiTiVPN",
+      "tls": {
+        "enabled": true,
+        "server_name": "ssl.fastly.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "США None 🇺🇸",
+      "server": "130.250.137.171",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.ignitelimit.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "104.16.174.12",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.ignitelimit.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "США Chicago 🇺🇸",
+      "server": "199.232.78.160",
+      "server_port": 443,
+      "password": "MiTiVPN",
+      "tls": {
+        "enabled": true,
+        "server_name": "ssl.fastly.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "104.18.152.233",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.ignitelimit.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "США Chicago 🇺🇸",
+      "server": "199.232.78.160",
+      "server_port": 443,
+      "password": "mitivpn",
+      "tls": {
+        "enabled": true,
+        "server_name": "ssl.fastly.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "8.47.69.0",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.pleadcourt.org",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "США Chicago 🇺🇸",
+      "server": "199.232.78.160",
+      "server_port": 443,
+      "password": "MiTiVPN",
+      "tls": {
+        "enabled": true,
+        "server_name": "ssl.fastly.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "США None 🇺🇸",
+      "server": "151.101.56.7",
+      "server_port": 443,
+      "password": "MiTiVPN",
+      "tls": {
+        "enabled": true,
+        "server_name": "ssl.fastly.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "Швейцария None 🇨🇭",
+      "server": "185.18.250.245",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "www.calmlunch.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "162.159.38.119",
+      "server_port": 443,
+      "password": "humanity",
+      "tls": {
+        "enabled": true,
+        "server_name": "162.159.38.119",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "104.21.12.87",
+      "server_port": 443,
+      "password": "0b65bb06-6b28-487a-8e3c-820dda51e977",
+      "tls": {
+        "enabled": true,
+        "server_name": "series-v1.samanehha.co",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "США None 🇺🇸",
+      "server": "199.232.206.245",
+      "server_port": 443,
+      "password": "7b12dfabbe374661a12d11d698d86fbd",
+      "tls": {
+        "enabled": true,
+        "server_name": "ssl.fastly.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "США None 🇺🇸",
+      "server": "135.148.148.4",
+      "server_port": 80,
+      "password": "800eb26c-cd0c-4269-aae7-e63d75de4edd",
+      "tls": {
+        "enabled": true,
+        "server_name": "us3.trojanvh.xyz",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "США None 🇺🇸",
+      "server": "135.148.148.4",
+      "server_port": 80,
+      "password": "800eb26c-cd0c-4269-aae7-e63d75de4edd",
+      "tls": {
+        "enabled": true,
+        "server_name": "us3.trojanvh.xyz",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "Канада Montreal 🇨🇦",
+      "server": "149.56.141.11",
+      "server_port": 443,
+      "password": "8b6daf15-8342-482d-b894-1239fd98ce7f",
+      "tls": {
+        "enabled": true,
+        "server_name": "149.56.141.11",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "Канада Montreal 🇨🇦",
+      "server": "149.56.141.11",
+      "server_port": 443,
+      "password": "8b6daf15-8342-482d-b894-1239fd98ce7f",
+      "tls": {
+        "enabled": true,
+        "server_name": "149.56.141.11",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "США Chicago 🇺🇸",
+      "server": "23.227.193.173",
+      "server_port": 443,
+      "password": "AZWY=WAZk5TeVYmMUudr2xmeb00I3ymeMQ",
+      "tls": {
+        "enabled": true,
+        "server_name": "23.227.193.173",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "104.16.71.213",
+      "server_port": 443,
+      "password": "MiTiVPN",
+      "tls": {
+        "enabled": true,
+        "server_name": "104.16.71.213",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "None None 🏳️",
+      "server": "104.16.72.41",
+      "server_port": 443,
+      "password": "MiTiVPN",
+      "tls": {
+        "enabled": true,
+        "server_name": "sw.App-Cloud.ir",
         "utls": {
           "enabled": true,
           "fingerprint": "chrome"
