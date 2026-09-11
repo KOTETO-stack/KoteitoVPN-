@@ -13,11 +13,9 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install aiohttp geoip2
-      - name: Download GeoLite2
+      - name: Download GeoLite2 (Public Mirror)
         run: |
-          wget -O GeoLite2-City.tar.gz "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=${{ secrets.MAXMIND_LICENSE }}&suffix=tar.gz"
-          tar -xzf GeoLite2-City.tar.gz
-          mv GeoLite2-City_*/GeoLite2-City.mmdb .
+          wget -O GeoLite2-City.mmdb https://raw.githubusercontent.com/P3TERX/GeoLite.mmdb/download/GeoLite2-City.mmdb
       - run: python collector.py
       - name: Commit and push
         run: |
