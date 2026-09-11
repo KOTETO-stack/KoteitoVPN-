@@ -1,7 +1,7 @@
 name: 2. Generate VPN Subscription
 on:
   schedule:
-    - cron: '10 */6 * * *' # Запуск через 10 минут после сборщика
+    - cron: '10 */6 * * *'
   workflow_dispatch:
 
 jobs:
@@ -13,11 +13,12 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install geoip2 requests
-      - name: Download GeoLite2
+      - name: Download GeoLite2 (Public Mirror)
         run: |
-          wget -O GeoLite2-City.tar.gz "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=${{ secrets.MAXMIND_LICENSE }}&suffix=tar.gz"
-          tar -xzf GeoLite2-City.tar.gz
-          mv GeoLite2-City_*/GeoLite2-City.mmdb .
+          wget -O GeoLite2-City.mmdb https://raw.githubusercontent.com/P3TERX/GeoLite.mmdb/download/GeoLite2-City.mmdb
+      - name: Download verified servers
+        run: |
+          wget -O verified_servers.json "https://raw.githubusercontent.com/ТВОЙ_ЛОГИН/ИМЯ_РЕПОЗИТОРИЯ/main/verified_servers.json"
       - run: python generator.py
       - name: Commit and push
         run: |
