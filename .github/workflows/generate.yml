@@ -4,6 +4,9 @@ on:
     - cron: '10 */6 * * *'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   generate:
     runs-on: ubuntu-latest
@@ -18,7 +21,7 @@ jobs:
           wget -O GeoLite2-City.mmdb https://raw.githubusercontent.com/P3TERX/GeoLite.mmdb/download/GeoLite2-City.mmdb
       - name: Download verified servers
         run: |
-          wget -O verified_servers.json "https://raw.githubusercontent.com/ТВОЙ_ЛОГИН/ИМЯ_РЕПОЗИТОРИЯ/main/verified_servers.json"
+          wget -O verified_servers.json "https://raw.githubusercontent.com/KOTETO-stack/KoteitoVPN-/main/verified_servers.json"
       - run: python generator.py
       - name: Commit and push
         run: |
