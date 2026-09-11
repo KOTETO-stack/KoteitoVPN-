@@ -1,0 +1,14 @@
+{
+  "sources": [
+    "https://raw.githubusercontent.com/nikita29a/FreeProxyList/main/mirror/1.txt",
+    "https://raw.githubusercontent.com/MohammadBahemmat/V2ray-Collector/main/output/vless_servers.txt",
+    "https://raw.githubusercontent.com/MohammadBahemmat/V2ray-Collector/main/output/trojan_servers.txt",
+    "https://raw.githubusercontent.com/MohammadBahemmat/V2ray-Collector/main/output/hysteria2_servers.txt",
+    "https://raw.githubusercontent.com/Sage-77/V2ray-configs/main/config.txt",
+    "https://raw.githubusercontent.com/kort0881/vpn-vless-configs-russia/main/configs.txt",
+    "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/All_Configs.txt",
+    "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Vless.txt",
+    "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Trojan.txt",
+    "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Hysteria2.txt"
+  ]
+}
