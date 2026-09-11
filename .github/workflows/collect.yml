@@ -1,0 +1,28 @@
+name: 1. Collect and Verify VPN Servers
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install aiohttp geoip2
+      - name: Download GeoLite2
+        run: |
+          wget -O GeoLite2-City.tar.gz "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=${{ secrets.MAXMIND_LICENSE }}&suffix=tar.gz"
+          tar -xzf GeoLite2-City.tar.gz
+          mv GeoLite2-City_*/GeoLite2-City.mmdb .
+      - run: python collector.py
+      - name: Commit and push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add verified_servers.json
+          git commit -m "Update verified servers $(date +'%Y-%m-%d %H:%M')" || exit 0
+          git push
